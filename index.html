@@ -121,7 +121,6 @@
             flex-direction: column;
         }
 
-        /* اسم چسبیده و بولد */
         .brand-title {
             font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
             font-size: 1.25rem;
@@ -133,7 +132,6 @@
             line-height: 1.1;
         }
 
-        /* زیرنویس فارسی */
         .brand-subtitle {
             font-size: 0.75rem;
             font-weight: 700;
@@ -141,7 +139,6 @@
             margin-top: 2px;
         }
 
-        /* کنترل‌های هدر */
         .header-controls {
             display: flex;
             align-items: center;
@@ -257,7 +254,6 @@
             padding: 0 20px;
         }
 
-        /* شبکه‌بندی اصلی */
         .quad-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
@@ -313,7 +309,6 @@
             line-height: 1.8;
         }
 
-        /* شبکه‌بندی پیام‌رسان‌ها */
         .social-links-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -347,7 +342,6 @@
             transform: translateY(-2px);
         }
 
-        /* بخش گالری */
         .section-header {
             margin: 40px 0 24px 0;
             display: flex;
@@ -366,7 +360,7 @@
             color: var(--text-main);
         }
 
-        /* گالری با پشتیبانی کامل از PNG ترنسپرنت */
+        /* گالری با پشتیبانی از PNG ترنسپرنت */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -567,33 +561,32 @@
     <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a7321d.mp3?filename=cyberpunk-2099-10701.mp3"></audio>
 
     <script>
-        // خواندن خودکار تمام عکس‌های آپلود شده در پوشه images
-        const username = 'solowayiq-stack';
-        const repo = 'my-website';
+        /* =========================================================================
+           لیست عکس‌های گالری
+           کافیست اسم فایل‌های عکسی که توی پوشه images آپلود می‌کنی رو اینجا اضافه کنی.
+           مثلاً: { file: 'shsjjaj37.png', title: 'عنوان دلخواه عکس' }
+           هرچند تا عکس که خواستی می‌تونی با همین الگو اضافه کنی!
+        ========================================================================= */
+        const galleryImages = [
+            { file: 'shsjjaj37.png', title: 'آرت‌ورک آپکس' },
+            { file: 'img1.png', title: 'پروژه اول' },
+            // اینجا می‌تونی عکس‌های بیشتر اضافه کنی:
+            // { file: ' اسم_فایل_بعدی.png ', title: 'توضیح عکس' }
+        ];
+
         const galleryGrid = document.getElementById('galleryGrid');
 
-        fetch(`https://api.github.com/repos/${username}/${repo}/contents/images`)
-            .then(response => response.json())
-            .then(files => {
-                if (Array.isArray(files)) {
-                    files.forEach(file => {
-                        // پشتیبانی کامل از تمام فرمت‌های تصویری مانند PNG، JPG، WEBP، GIF و SVG
-                        if (file.name.match(/\.(jpg|jpeg|png|gif|webp|svg)$/i)) {
-                            const fileNameWithoutExt = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
-                            const card = document.createElement('div');
-                            card.className = 'gallery-card';
-                            card.innerHTML = `
-                                <img src="images/${file.name}" alt="${fileNameWithoutExt}">
-                                <div class="gallery-info">
-                                    <span class="gallery-title">${fileNameWithoutExt}</span>
-                                </div>
-                            `;
-                            galleryGrid.appendChild(card);
-                        }
-                    });
-                }
-            })
-            .catch(err => console.log('در حال بارگذاری تصاویر...'));
+        galleryImages.forEach(img => {
+            const card = document.createElement('div');
+            card.className = 'gallery-card';
+            card.innerHTML = `
+                <img src="images/${img.file}" alt="${img.title}" onerror="this.onerror=null; this.parentElement.style.display='none';">
+                <div class="gallery-info">
+                    <span class="gallery-title">${img.title}</span>
+                </div>
+            `;
+            galleryGrid.appendChild(card);
+        });
 
         // تم دارک و لایت
         const themeToggleBtn = document.getElementById('themeToggleBtn');
