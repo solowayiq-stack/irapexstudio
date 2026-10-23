@@ -8,34 +8,40 @@
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
     <!-- آیکون‌های ریمیکس -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- فونت انگلیسی مدرن برای لوگو -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800;900&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
     <style>
         /* متغیرهای تم لایت (پیش‌فرض) */
         :root {
-            --bg-color: #f8fafc;
-            --card-bg: rgba(255, 255, 255, 0.85);
-            --card-border: rgba(0, 0, 0, 0.08);
-            --card-border-hover: rgba(0, 242, 254, 0.6);
+            --bg-color: #f4f6fc;
+            --card-bg: rgba(255, 255, 255, 0.88);
+            --card-border: rgba(226, 232, 240, 0.9);
+            --card-border-hover: #0284c7;
             --text-main: #0f172a;
-            --text-sub: #64748b;
+            --text-sub: #475569;
             --accent-cyan: #0284c7;
-            --accent-pink: #e11d48;
+            --accent-cyan-glow: rgba(2, 132, 199, 0.15);
+            --accent-purple: #7c3aed;
             --glass-blur: blur(20px);
-            --shadow-clean: 0 20px 40px rgba(0, 0, 0, 0.05);
-            --header-bg: rgba(248, 250, 252, 0.85);
+            --shadow-clean: 0 16px 36px rgba(15, 23, 42, 0.05);
+            --header-bg: rgba(244, 246, 252, 0.85);
+            --gallery-img-bg: #e2e8f0;
         }
 
         /* متغیرهای تم دارک */
         [data-theme="dark"] {
-            --bg-color: #050508;
-            --card-bg: rgba(18, 20, 28, 0.75);
-            --card-border: rgba(255, 255, 255, 0.07);
-            --card-border-hover: rgba(0, 242, 254, 0.4);
+            --bg-color: #06080e;
+            --card-bg: rgba(15, 20, 32, 0.75);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --card-border-hover: #00f2fe;
             --text-main: #ffffff;
             --text-sub: #94a3b8;
             --accent-cyan: #00f2fe;
-            --accent-pink: #ff0055;
-            --shadow-clean: 0 20px 40px rgba(0, 0, 0, 0.5);
-            --header-bg: rgba(5, 5, 8, 0.8);
+            --accent-cyan-glow: rgba(0, 242, 254, 0.2);
+            --accent-purple: #a855f7;
+            --shadow-clean: 0 20px 40px rgba(0, 0, 0, 0.45);
+            --header-bg: rgba(6, 8, 14, 0.85);
+            --gallery-img-bg: #0f1420;
         }
 
         * {
@@ -43,7 +49,11 @@
             margin: 0;
             padding: 0;
             font-family: 'Vazirmatn', sans-serif;
-            transition: background-color 0.4s ease, color 0.4s ease, border-color 0.3s ease, transform 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -52,10 +62,10 @@
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
-            padding-bottom: 80px;
+            padding-bottom: 60px;
         }
 
-        /* پس‌زمینه زنده و محیطی */
+        /* پس‌زمینه زنده و مدرن */
         .ambient-glow {
             position: fixed;
             top: 0;
@@ -65,16 +75,11 @@
             z-index: 0;
             pointer-events: none;
             overflow: hidden;
-            background: radial-gradient(circle at 15% 20%, rgba(2, 132, 199, 0.06) 0%, transparent 40%),
-                        radial-gradient(circle at 85% 80%, rgba(225, 29, 72, 0.05) 0%, transparent 40%);
+            background: radial-gradient(circle at 10% 15%, var(--accent-cyan-glow) 0%, transparent 45%),
+                        radial-gradient(circle at 90% 85%, rgba(124, 58, 237, 0.08) 0%, transparent 45%);
         }
 
-        [data-theme="dark"] .ambient-glow {
-            background: radial-gradient(circle at 15% 20%, rgba(0, 242, 254, 0.05) 0%, transparent 40%),
-                        radial-gradient(circle at 85% 80%, rgba(255, 0, 85, 0.04) 0%, transparent 40%);
-        }
-
-        /* هدر شیک و مدرن */
+        /* هدر حرفه‌ای و رسمی */
         header {
             position: fixed;
             top: 0;
@@ -82,7 +87,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 18px 8%;
+            padding: 14px 6%;
             background: var(--header-bg);
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
@@ -90,109 +95,213 @@
             border-bottom: 1px solid var(--card-border);
         }
 
-        .brand-logo {
+        /* لوگو با فونت بولد چسبیده */
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+
+        .brand-icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.4rem;
+            box-shadow: 0 8px 20px var(--accent-cyan-glow);
+        }
+
+        .brand-text-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* اسم چسبیده و بولد */
+        .brand-title {
+            font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            background: linear-gradient(120deg, var(--text-main) 40%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+
+        /* زیرنویس فارسی */
+        .brand-subtitle {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-sub);
+            margin-top: 2px;
+        }
+
+        /* کنترل‌های هدر */
+        .header-controls {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 1.4rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--text-main) 30%, var(--accent-cyan) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 0.5px;
         }
 
-        .header-actions {
-            display: flex;
-            gap: 12px;
-        }
-
-        .header-action-btn {
+        .action-btn {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             color: var(--text-main);
-            width: 44px;
-            height: 44px;
-            border-radius: 14px;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             font-size: 1.2rem;
-            backdrop-filter: var(--glass-blur);
+            box-shadow: var(--shadow-clean);
         }
 
-        .header-action-btn:hover {
+        .action-btn:hover {
             border-color: var(--accent-cyan);
             color: var(--accent-cyan);
-            transform: scale(1.05);
+            transform: translateY(-2px);
         }
 
-        /* بدنه و ساختار کانتینر */
+        /* منوی همبرگری */
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .mobile-drawer {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100%;
+            background: var(--card-bg);
+            border-left: 1px solid var(--card-border);
+            backdrop-filter: var(--glass-blur);
+            z-index: 2001;
+            padding: 30px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.15);
+        }
+
+        .mobile-drawer.active {
+            right: 0;
+        }
+
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .drawer-close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-main);
+            cursor: pointer;
+        }
+
+        .drawer-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .drawer-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .drawer-link:hover {
+            background: var(--accent-cyan-glow);
+            color: var(--accent-cyan);
+        }
+
+        /* کانتینر اصلی */
         .wrapper {
             position: relative;
             z-index: 10;
             max-width: 1200px;
-            margin: 130px auto 0 auto;
-            padding: 0 24px;
+            margin: 120px auto 0 auto;
+            padding: 0 20px;
         }
 
-        /* گرید کارت‌ها */
+        /* شبکه‌بندی اصلی */
         .quad-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-bottom: 50px;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 22px;
+            margin-bottom: 60px;
         }
 
-        /* کارت‌های شیشه‌ای مدرن */
         .glass-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 30px;
+            border-radius: 20px;
+            padding: 28px;
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
             box-shadow: var(--shadow-clean);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            min-height: 270px;
             position: relative;
-            overflow: hidden;
-            min-height: 280px;
         }
 
         .glass-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-5px);
             border-color: var(--card-border-hover);
-            box-shadow: 0 25px 50px rgba(2, 132, 199, 0.1);
-        }
-
-        [data-theme="dark"] .glass-card:hover {
-            box-shadow: 0 25px 50px rgba(0, 242, 254, 0.08);
+            box-shadow: 0 20px 40px var(--accent-cyan-glow);
         }
 
         .card-icon-box {
-            width: 52px;
-            height: 52px;
-            border-radius: 16px;
-            background: rgba(2, 132, 199, 0.05);
-            border: 1px solid rgba(2, 132, 199, 0.1);
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: var(--accent-cyan-glow);
+            border: 1px solid var(--card-border);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             color: var(--accent-cyan);
-            margin-bottom: 20px;
-        }
-
-        [data-theme="dark"] .card-icon-box {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 18px;
         }
 
         .card-title {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 800;
             margin-bottom: 10px;
             color: var(--text-main);
@@ -204,11 +313,11 @@
             line-height: 1.8;
         }
 
-        /* راه‌های ارتباطی */
+        /* شبکه‌بندی پیام‌رسان‌ها */
         .social-links-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 10px;
             margin-top: 20px;
         }
 
@@ -217,8 +326,8 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            padding: 12px;
-            border-radius: 14px;
+            padding: 11px;
+            border-radius: 12px;
             background: rgba(0, 0, 0, 0.02);
             border: 1px solid var(--card-border);
             color: var(--text-main);
@@ -232,53 +341,73 @@
         }
 
         .social-btn:hover {
-            background: rgba(2, 132, 199, 0.08);
+            background: var(--accent-cyan-glow);
             border-color: var(--accent-cyan);
             color: var(--accent-cyan);
             transform: translateY(-2px);
         }
 
-        /* بخش عناوین */
+        /* بخش گالری */
         .section-header {
-            margin: 50px 0 25px 0;
+            margin: 40px 0 24px 0;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 12px;
+        }
+
+        .section-header-icon {
+            font-size: 1.5rem;
+            color: var(--accent-cyan);
         }
 
         .section-title {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 900;
-            letter-spacing: -0.5px;
             color: var(--text-main);
         }
 
-        /* گالری داینامیک تصاویر */
+        /* گالری با پشتیبانی کامل از PNG ترنسپرنت */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 24px;
+            gap: 22px;
         }
 
         .gallery-card {
             aspect-ratio: 1 / 1;
-            border-radius: 22px;
+            border-radius: 20px;
             overflow: hidden;
             position: relative;
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            cursor: pointer;
+            box-shadow: var(--shadow-clean);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+        }
+
+        .gallery-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: var(--gallery-img-bg);
+            opacity: 0.5;
+            z-index: 0;
         }
 
         .gallery-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            z-index: 1;
+            transition: transform 0.4s ease;
+            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.1));
         }
 
         .gallery-card:hover {
             border-color: var(--accent-cyan);
+            box-shadow: 0 12px 30px var(--accent-cyan-glow);
         }
 
         .gallery-card:hover img {
@@ -288,11 +417,12 @@
         .gallery-info {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, transparent 60%);
             opacity: 0;
             display: flex;
             align-items: flex-end;
-            padding: 22px;
+            padding: 18px;
+            z-index: 2;
             transition: opacity 0.3s ease;
         }
 
@@ -300,73 +430,111 @@
             opacity: 1;
         }
 
+        .gallery-title {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
         footer {
             text-align: center;
-            margin-top: 70px;
+            margin-top: 80px;
             font-size: 0.85rem;
+            font-weight: 600;
             color: var(--text-sub);
         }
     </style>
 </head>
 <body data-theme="light">
 
-    <!-- نورهای محیطی پس‌زمینه -->
+    <!-- پس‌زمینه محیطی -->
     <div class="ambient-glow"></div>
 
     <!-- هدر سایت -->
     <header>
-        <div class="brand-logo">
-            <i class="ri-gamepad-fill" style="color: var(--accent-cyan);"></i>
-            <span>IR Apex Studio</span>
-        </div>
-        <div class="header-actions">
-            <div class="header-action-btn" id="themeToggleBtn" title="تغییر تم (دارک / لایت)">
+        <a href="#" class="brand-container">
+            <div class="brand-icon-box">
+                <i class="ri-gamepad-line"></i>
+            </div>
+            <div class="brand-text-wrapper">
+                <span class="brand-title">irApexStudio</span>
+                <span class="brand-subtitle">استودیو آپکس</span>
+            </div>
+        </a>
+
+        <div class="header-controls">
+            <button class="action-btn" id="themeToggleBtn" title="تغییر تم">
                 <i class="ri-moon-line" id="themeIcon"></i>
-            </div>
-            <div class="header-action-btn" id="musicBtn" title="پخش موزیک گیمینگ پس‌زمینه">
+            </button>
+            <button class="action-btn" id="musicBtn" title="پخش موزیک پس‌زمینه">
                 <i class="ri-music-2-line"></i>
-            </div>
+            </button>
+            <button class="action-btn" id="hamburgerBtn" title="منو">
+                <i class="ri-menu-3-line"></i>
+            </button>
         </div>
     </header>
 
+    <!-- منوی همبرگری کشویی -->
+    <div class="mobile-menu-overlay" id="menuOverlay"></div>
+    <div class="mobile-drawer" id="mobileDrawer">
+        <div>
+            <div class="drawer-header">
+                <div class="brand-title" style="font-size: 1.1rem;">irApexStudio</div>
+                <button class="drawer-close-btn" id="closeDrawerBtn"><i class="ri-close-line"></i></button>
+            </div>
+            <nav class="drawer-nav">
+                <a href="#" class="drawer-link"><i class="ri-home-4-line"></i> صفحه اصلی</a>
+                <a href="#about" class="drawer-link"><i class="ri-information-line"></i> درباره استودیو</a>
+                <a href="#projects" class="drawer-link"><i class="ri-rocket-line"></i> پروژه‌ها</a>
+                <a href="#gallery" class="drawer-link"><i class="ri-gallery-line"></i> گالری و آرت‌ورک</a>
+                <a href="#contact" class="drawer-link"><i class="ri-contacts-line"></i> ارتباط با ما</a>
+            </nav>
+        </div>
+        <div style="font-size: 0.8rem; color: var(--text-sub); text-align: center;">
+            IR APEX STUDIO © 2026
+        </div>
+    </div>
+
+    <!-- بدنه اصلی -->
     <div class="wrapper">
 
-        <!-- شبکه کارت‌ها (معرفی، درباره ما، پروژه‌ها و ارتباط با مدیریت) -->
+        <!-- کارت‌های چهارگانه اطلاعات اصلی -->
         <div class="quad-grid">
 
-            <!-- کارت ۱: معرفی استودیو -->
+            <!-- کارت ۱: معرفی -->
             <div class="glass-card">
                 <div>
-                    <div class="card-icon-box"><i class="ri-shield-flash-fill"></i></div>
-                    <div class="card-title">استودیو مستقل آپکس</div>
-                    <div class="card-desc">توسعه‌دهنده آرت‌ورک‌ها، بازی‌ها و پروژه‌های دیجیتال مدرن با بالاترین استانداردهای گرافیکی و فنی.</div>
+                    <div class="card-icon-box"><i class="ri-shield-flash-line"></i></div>
+                    <div class="card-title">استودیو بازی‌سازی آپکس</div>
+                    <div class="card-desc">طراح و توسعه‌دهنده پروژه‌های دیجیتال، بازی‌های ویدیویی مدرن و آرت‌ورک‌های نسل جدید با بالاترین کیفیت بصری.</div>
                 </div>
             </div>
 
             <!-- کارت ۲: درباره ما -->
-            <div class="glass-card">
+            <div class="glass-card" id="about">
                 <div>
-                    <div class="card-icon-box"><i class="ri-user-star-fill"></i></div>
+                    <div class="card-icon-box"><i class="ri-user-star-line"></i></div>
                     <div class="card-title">درباره ما</div>
-                    <div class="card-desc">مجموعه‌ای از ایده‌پردازان و سازندگان خلاق که تمرکزمان روی خلق تجربه‌های بصری خیره‌کننده و نسل جدید است.</div>
+                    <div class="card-desc">تیمی متشکل از ایده‌پردازان، گرافیست‌ها و سازندگان خلاق با تمرکز بر خلق تجربه‌های گرافیکی ماندگار و استانداردهای جهانی.</div>
                 </div>
             </div>
 
-            <!-- کارت ۳: پروژه‌های ویژه -->
-            <div class="glass-card">
+            <!-- کارت ۳: پروژه‌ها -->
+            <div class="glass-card" id="projects">
                 <div>
-                    <div class="card-icon-box"><i class="ri-rocket-2-fill"></i></div>
+                    <div class="card-icon-box"><i class="ri-cpu-line"></i></div>
                     <div class="card-title">پروژه‌های ما</div>
-                    <div class="card-desc">توسعه بازی‌های مستقل، طراحی مفهومی محیط‌های سه‌بعدی و ساخت اپلیکیشن‌های تعاملی پیشرفته.</div>
+                    <div class="card-desc">ارائه راهکارهای توسعه بازی، طراحی کانپست سه‌بعدی و خلق المان‌های بصری هوشمندانه برای بازی‌های ویدیویی.</div>
                 </div>
             </div>
 
-            <!-- کارت ۴: راه‌های ارتباطی (ایتا و روبیکا) -->
-            <div class="glass-card">
+            <!-- کارت ۴: ارتباط با ما -->
+            <div class="glass-card" id="contact">
                 <div>
-                    <div class="card-icon-box"><i class="ri-chat-voice-fill"></i></div>
+                    <div class="card-icon-box"><i class="ri-question-answer-line"></i></div>
                     <div class="card-title">ارتباط با مدیریت</div>
-                    <div class="card-desc">جهت ثبت سفارش، ارتباط مستقیم و ارسال پیشنهاد از طریق پیام‌رسان‌های زیر در ارتباط باشید:</div>
+                    <div class="card-desc">جهت ثبت سفارش، مشاوره‌های تخصصی و همکاری در پروژه‌ها از طریق پیام‌رسان‌های زیر در تماس باشید:</div>
                 </div>
                 <div class="social-links-grid">
                     <a href="https://eitaa.com/irApexStudio_Admin" target="_blank" class="social-btn">
@@ -380,26 +548,54 @@
 
         </div>
 
-        <!-- تیتر گالری -->
-        <div class="section-header">
-            <div class="section-title">گالری و کانپست‌آرت‌ها</div>
-            <div style="font-size: 0.82rem; color: var(--accent-cyan);">آپدیت خودکار از گیت‌هاب</div>
+        <!-- گالری اختصاصی -->
+        <div class="section-header" id="gallery">
+            <i class="ri-image-line section-header-icon"></i>
+            <div class="section-title">گالری و آرت‌ورک‌ها</div>
         </div>
 
-        <!-- گالری داینامیک تصاویر -->
+        <!-- شبکه گالری -->
         <div class="gallery-grid" id="galleryGrid"></div>
 
     </div>
 
     <footer>
-        <p>IR APEX STUDIO © 2026 | All Rights Reserved</p>
+        <p>IR APEX STUDIO © 2026 | تمامی حقوق محفوظ است</p>
     </footer>
 
-    <!-- پلیر موزیک مخفی -->
+    <!-- موزیک پس‌زمینه -->
     <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a7321d.mp3?filename=cyberpunk-2099-10701.mp3"></audio>
 
     <script>
-        // کنترل سیستم لایت / دارک مود
+        // خواندن خودکار تمام عکس‌های آپلود شده در پوشه images
+        const username = 'solowayiq-stack';
+        const repo = 'my-website';
+        const galleryGrid = document.getElementById('galleryGrid');
+
+        fetch(`https://api.github.com/repos/${username}/${repo}/contents/images`)
+            .then(response => response.json())
+            .then(files => {
+                if (Array.isArray(files)) {
+                    files.forEach(file => {
+                        // پشتیبانی کامل از تمام فرمت‌های تصویری مانند PNG، JPG، WEBP، GIF و SVG
+                        if (file.name.match(/\.(jpg|jpeg|png|gif|webp|svg)$/i)) {
+                            const fileNameWithoutExt = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
+                            const card = document.createElement('div');
+                            card.className = 'gallery-card';
+                            card.innerHTML = `
+                                <img src="images/${file.name}" alt="${fileNameWithoutExt}">
+                                <div class="gallery-info">
+                                    <span class="gallery-title">${fileNameWithoutExt}</span>
+                                </div>
+                            `;
+                            galleryGrid.appendChild(card);
+                        }
+                    });
+                }
+            })
+            .catch(err => console.log('در حال بارگذاری تصاویر...'));
+
+        // تم دارک و لایت
         const themeToggleBtn = document.getElementById('themeToggleBtn');
         const themeIcon = document.getElementById('themeIcon');
         const bodyEl = document.body;
@@ -414,33 +610,31 @@
             }
         });
 
-        // خواندن خودکار عکس‌ها از پوشه images گیت‌هاب
-        const username = 'solowayiq-stack';
-        const repo = 'my-website';
-        const galleryGrid = document.getElementById('galleryGrid');
+        // منوی همبرگری
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+        const mobileDrawer = document.getElementById('mobileDrawer');
+        const menuOverlay = document.getElementById('menuOverlay');
 
-        fetch(`https://api.github.com/repos/${username}/${repo}/contents/images`)
-            .then(response => response.json())
-            .then(files => {
-                if(Array.isArray(files)) {
-                    files.forEach(file => {
-                        if (file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
-                            const card = document.createElement('div');
-                            card.className = 'gallery-card';
-                            card.innerHTML = `
-                                <img src="images/${file.name}" alt="Apex Art">
-                                <div class="gallery-info">
-                                    <span style="color:#fff; font-weight:700; font-size:0.9rem;">${file.name.split('.')[0]}</span>
-                                </div>
-                            `;
-                            galleryGrid.appendChild(card);
-                        }
-                    });
-                }
-            })
-            .catch(err => console.log('خطا در بارگذاری تصاویر:', err));
+        function openMenu() {
+            mobileDrawer.classList.add('active');
+            menuOverlay.classList.add('active');
+        }
 
-        // کنترل موزیک پس‌زمینه
+        function closeMenu() {
+            mobileDrawer.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        }
+
+        hamburgerBtn.addEventListener('click', openMenu);
+        closeDrawerBtn.addEventListener('click', closeMenu);
+        menuOverlay.addEventListener('click', closeMenu);
+
+        document.querySelectorAll('.drawer-link').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // موزیک پس‌زمینه
         const musicBtn = document.getElementById('musicBtn');
         const bgMusic = document.getElementById('bgMusic');
         let isPlaying = false;
