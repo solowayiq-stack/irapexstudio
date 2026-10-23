@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl" data-theme="dark">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,25 +10,16 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #030712;
-            --card-bg: rgba(15, 23, 42, 0.75);
-            --card-border: rgba(56, 189, 248, 0.2);
-            --text-main: #f8fafc;
+            --bg-color: #050508;
+            --card-bg: rgba(18, 20, 28, 0.65);
+            --card-border: rgba(255, 255, 255, 0.07);
+            --card-border-hover: rgba(0, 242, 254, 0.4);
+            --text-main: #ffffff;
             --text-sub: #94a3b8;
             --accent-cyan: #00f2fe;
-            --accent-pink: #ff007f;
-            --accent-purple: #8a2be2;
-            --glow-shadow: 0 10px 30px -5px rgba(0, 242, 254, 0.2);
-            --glass-blur: blur(20px);
-        }
-
-        [data-theme="light"] {
-            --bg-color: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.85);
-            --card-border: rgba(255, 0, 127, 0.25);
-            --text-main: #ffffff;
-            --text-sub: #cbd5e1;
-            --glow-shadow: 0 10px 30px -5px rgba(255, 0, 127, 0.25);
+            --accent-pink: #ff0055;
+            --glass-blur: blur(24px);
+            --shadow-clean: 0 20px 40px rgba(0, 0, 0, 0.5);
         }
 
         * {
@@ -36,7 +27,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Vazirmatn', sans-serif;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         body {
@@ -45,11 +36,11 @@
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
-            padding-bottom: 60px;
+            padding-bottom: 80px;
         }
 
-        /* ذرات متحرک پس‌زمینه */
-        #particles-canvas {
+        /* پس‌زمینه زنده و مدرن (نورهای محیطی تاریک و لوکس) */
+        .ambient-glow {
             position: fixed;
             top: 0;
             left: 0;
@@ -57,9 +48,12 @@
             height: 100%;
             z-index: 0;
             pointer-events: none;
+            overflow: hidden;
+            background: radial-gradient(circle at 15% 20%, rgba(0, 242, 254, 0.05) 0%, transparent 40%),
+                        radial-gradient(circle at 85% 80%, rgba(255, 0, 85, 0.04) 0%, transparent 40%);
         }
 
-        /* هدر نئونی مدرن */
+        /* هدر فوق‌العاده شیک و مینیمال */
         header {
             position: fixed;
             top: 0;
@@ -67,33 +61,27 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 8%;
-            background: rgba(3, 7, 18, 0.8);
+            padding: 18px 8%;
+            background: rgba(5, 5, 8, 0.8);
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
             z-index: 1000;
             border-bottom: 1px solid var(--card-border);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
 
         .brand-logo {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 1.5rem;
+            gap: 10px;
+            font-size: 1.4rem;
             font-weight: 900;
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-pink));
+            background: linear-gradient(135deg, #ffffff 30%, var(--accent-cyan) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+            letter-spacing: 0.5px;
         }
 
-        .header-actions {
-            display: flex;
-            gap: 12px;
-        }
-
-        .action-btn {
+        .header-action-btn {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             color: var(--text-main);
@@ -104,101 +92,89 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             backdrop-filter: var(--glass-blur);
         }
 
-        .action-btn:hover {
-            transform: translateY(-3px) scale(1.05);
+        .header-action-btn:hover {
             border-color: var(--accent-cyan);
             color: var(--accent-cyan);
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
+            transform: scale(1.05);
         }
 
-        /* کانتینر اصلی */
+        /* بدنه و ساختار کانتینر */
         .wrapper {
             position: relative;
             z-index: 10;
-            max-width: 1250px;
-            margin: 120px auto 0 auto;
-            padding: 0 20px;
+            max-width: 1200px;
+            margin: 130px auto 0 auto;
+            padding: 0 24px;
         }
 
-        /* گرید مربعی اصلی */
-        .square-grid {
+        /* گرید چهارگانه و مربعی مدرن */
+        .quad-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
             margin-bottom: 50px;
         }
 
-        /* کارت‌های مربعی با لایتینگ نئونی */
-        .square-card {
+        /* کارت‌های شیشه‌ای مجزا */
+        .glass-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: 24px;
             padding: 30px;
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
-            box-shadow: var(--glow-shadow);
+            box-shadow: var(--shadow-clean);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             position: relative;
             overflow: hidden;
+            min-height: 280px;
         }
 
-        .square-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-pink), var(--accent-purple));
-            opacity: 0.8;
+        .glass-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--card-border-hover);
+            box-shadow: 0 25px 50px rgba(0, 242, 254, 0.08);
         }
 
-        .square-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent-cyan);
-            box-shadow: 0 15px 35px rgba(0, 242, 254, 0.3);
-        }
-
-        .card-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 18px;
-            background: linear-gradient(135deg, rgba(0, 242, 254, 0.15), rgba(255, 0, 127, 0.15));
-            border: 1px solid rgba(0, 242, 254, 0.3);
+        .card-icon-box {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             color: var(--accent-cyan);
             margin-bottom: 20px;
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
         }
 
         .card-title {
-            font-size: 1.35rem;
-            font-weight: 900;
-            margin-bottom: 12px;
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 10px;
             color: #fff;
         }
 
         .card-desc {
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             color: var(--text-sub);
             line-height: 1.8;
         }
 
-        /* بخش راه‌های ارتباطی */
-        .social-grid {
+        /* راه‌های ارتباطی ایتا و روبیکا */
+        .social-links-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr 1fr;
             gap: 12px;
-            margin-top: 22px;
+            margin-top: 20px;
         }
 
         .social-btn {
@@ -206,123 +182,99 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            padding: 14px;
-            border-radius: 16px;
+            padding: 12px;
+            border-radius: 14px;
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--card-border);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             color: var(--text-main);
             text-decoration: none;
-            font-weight: 800;
-            font-size: 0.9rem;
+            font-weight: 700;
+            font-size: 0.88rem;
         }
 
         .social-btn:hover {
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-            color: #fff;
-            border-color: transparent;
-            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.4);
-            transform: scale(1.03);
+            background: rgba(0, 242, 254, 0.08);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            transform: translateY(-2px);
         }
 
-        /* تیتر بخش‌ها */
+        /* بخش گالری */
         .section-header {
+            margin: 50px 0 25px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 45px 0 25px 0;
         }
 
         .section-title {
-            font-size: 1.7rem;
+            font-size: 1.6rem;
             font-weight: 900;
-            background: linear-gradient(90deg, #fff, var(--accent-cyan));
+            letter-spacing: -0.5px;
+            background: linear-gradient(90deg, #fff, var(--text-sub));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* گالری مربعی پروژه‌ها */
+        /* گالری مربعی تصاویر (۱x۱) */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-            gap: 22px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
         }
 
-        .gallery-item {
+        .gallery-card {
             aspect-ratio: 1 / 1;
             border-radius: 22px;
             overflow: hidden;
             position: relative;
-            border: 1px solid var(--card-border);
             background: var(--card-bg);
+            border: 1px solid var(--card-border);
             cursor: pointer;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
         }
 
-        .gallery-item img {
+        .gallery-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: 0.5s;
+            transition: transform 0.5s ease;
         }
 
-        .gallery-item:hover {
-            border-color: var(--accent-pink);
-            box-shadow: 0 15px 35px rgba(255, 0, 127, 0.35);
+        .gallery-card:hover {
+            border-color: var(--accent-cyan);
         }
 
-        .gallery-item:hover img {
-            transform: scale(1.1);
+        .gallery-card:hover img {
+            transform: scale(1.08);
         }
 
-        .gallery-overlay {
+        .gallery-info {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(3, 7, 18, 0.9), transparent);
+            background: linear-gradient(to top, rgba(5,5,8,0.9), transparent);
             opacity: 0;
             display: flex;
             align-items: flex-end;
-            padding: 20px;
-            transition: 0.3s;
+            padding: 22px;
+            transition: opacity 0.3s ease;
         }
 
-        .gallery-item:hover .gallery-overlay {
+        .gallery-card:hover .gallery-info {
             opacity: 1;
-        }
-
-        /* آمار استودیو */
-        .stats-box {
-            display: flex;
-            justify-content: space-around;
-            text-align: center;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid var(--card-border);
-        }
-
-        .stat-num {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--accent-cyan);
-            text-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
-        }
-
-        .stat-label {
-            font-size: 0.78rem;
-            color: var(--text-sub);
         }
 
         footer {
             text-align: center;
             margin-top: 70px;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             color: var(--text-sub);
         }
     </style>
 </head>
 <body>
 
-    <!-- بوم انیمیشنی ذرات متحرک -->
-    <canvas id="particles-canvas"></canvas>
+    <!-- نورهای محیطی پس‌زمینه -->
+    <div class="ambient-glow"></div>
 
     <!-- هدر سایت -->
     <header>
@@ -330,95 +282,73 @@
             <i class="ri-gamepad-fill" style="color: var(--accent-cyan);"></i>
             <span>IR Apex Studio</span>
         </div>
-        <div class="header-actions">
-            <button class="action-btn" id="musicBtn" title="پخش موزیک گیمینگ">
-                <i class="ri-music-2-line"></i>
-            </button>
-            <button class="action-btn" id="themeBtn" title="تغییر حالت تم">
-                <i class="ri-sun-line"></i>
-            </button>
+        <div class="header-action-btn" id="musicBtn" title="پخش موزیک گیمینگ پس‌زمینه">
+            <i class="ri-music-2-line"></i>
         </div>
     </header>
 
     <div class="wrapper">
 
-        <!-- شبکه مربعی مدرن -->
-        <div class="square-grid">
+        <!-- شبکه چهارگانه و مربعی (مدرن و مستقل) -->
+        <div class="quad-grid">
 
-            <!-- کارت ۱: معرفی اصلی استودیو -->
-            <div class="square-card">
+            <!-- کارت ۱: معرفی استودیو -->
+            <div class="glass-card">
                 <div>
-                    <div class="card-icon"><i class="ri-rocket-2-fill"></i></div>
-                    <div class="card-title">توسعه بازی‌های مستقل</div>
-                    <div class="card-desc">استودیو IR Apex خالق بازی‌های اکشن و بتل‌رویال نسل جدید با استفاده از متدهای روز بازی‌سازی و موتور Unity.</div>
-                </div>
-                <div class="stats-box">
-                    <div>
-                        <div class="stat-num">+۵</div>
-                        <div class="stat-label">پروژه فعال</div>
-                    </div>
-                    <div>
-                        <div class="stat-num">Unity</div>
-                        <div class="stat-label">موتور اصلی</div>
-                    </div>
+                    <div class="card-icon-box"><i class="ri-shield-flash-fill"></i></div>
+                    <div class="card-title">استودیو مستقل آپکس</div>
+                    <div class="card-desc">توسعه‌دهنده آرت‌ورک‌ها، بازی‌ها و پروژه‌های دیجیتال مدرن با بالاترین استانداردهای گرافیکی و فنی.</div>
                 </div>
             </div>
 
             <!-- کارت ۲: درباره استودیو -->
-            <div class="square-card" id="about">
+            <div class="glass-card">
                 <div>
-                    <div class="card-icon"><i class="ri-user-star-fill"></i></div>
-                    <div class="card-title">درباره استودیو</div>
-                    <div class="card-desc">ما مجموعه‌ای متشکل از گیمرهای حرفه‌ای و توسعه‌دهندگان عاشق صنعت بازی‌سازی هستیم که هدفمان خلق تجربه‌های هیجان‌انگیز، دوپامینی و باکیفیت برای دنیای گیم است.</div>
+                    <div class="card-icon-box"><i class="ri-user-star-fill"></i></div>
+                    <div class="card-title">درباره ما</div>
+                    <div class="card-desc">مجموعه‌ای از ایده‌پردازان و سازندگان خلاق که تمرکزمان روی خلق تجربه‌های بصری خیره‌کننده و نسل جدید است.</div>
                 </div>
             </div>
 
-            <!-- کارت ۳: راه‌های ارتباطی -->
-            <div class="square-card" id="contact">
+            <!-- کارت ۳: راه های ارتباطی (ایتا و روبیکا) -->
+            <div class="glass-card">
                 <div>
-                    <div class="card-icon"><i class="ri-chat-3-fill"></i></div>
-                    <div class="card-title">راه های ارتباطی</div>
-                    <div class="card-desc">جهت ارتباط مستقیم با مدیریت، مشاوره، ارسال پیشنهاد یا همکاری، می‌توانید از لینک‌های زیر استفاده کنید:</div>
-                    
-                    <div class="social-grid">
-                        <a href="https://eitaa.com/UnityHub_Admin" target="_blank" class="social-btn">
-                            <i class="ri-send-plane-fill" style="color: #ff6f00;"></i> ایتا
-                        </a>
-                        <a href="https://rubika.ir/UnityHub_Admin" target="_blank" class="social-btn">
-                            <i class="ri-message-3-fill" style="color: #a855f7;"></i> روبیکا
-                        </a>
-                        <a href="https://t.me/UnityHub_Admin" target="_blank" class="social-btn">
-                            <i class="ri-telegram-fill" style="color: #38bdf8;"></i> تلگرام
-                        </a>
-                        <a href="https://github.com/solowayiq-stack" target="_blank" class="social-btn">
-                            <i class="ri-github-fill"></i> گیت‌هاب
-                        </a>
-                    </div>
+                    <div class="card-icon-box"><i class="ri-chat-voice-fill"></i></div>
+                    <div class="card-title">ارتباط با مدیریت</div>
+                    <div class="card-desc">جهت ثبت سفارش، ارتباط مستقیم و ارسال پیشنهاد از طریق پیام‌رسان‌های زیر در ارتباط باشید:</div>
+                </div>
+                <div class="social-links-grid">
+                    <a href="https://eitaa.com/irApexStudio_Admin" target="_blank" class="social-btn">
+                        <i class="ri-send-plane-fill" style="color: #ff6f00;"></i> ایتا
+                    </a>
+                    <a href="https://rubika.ir/irApexStudio_Admin" target="_blank" class="social-btn">
+                        <i class="ri-message-3-fill" style="color: #a855f7;"></i> روبیکا
+                    </a>
                 </div>
             </div>
 
         </div>
 
-        <!-- تیتر گالری پروژه‌ها -->
-        <div class="section-header" id="gallery">
+        <!-- تیتر گالری -->
+        <div class="section-header">
             <div class="section-title">گالری و کانپست‌آرت‌ها</div>
-            <div style="font-size: 0.85rem; color: var(--accent-cyan);">بروزرسانی هوشمند منبع تصاویر</div>
+            <div style="font-size: 0.82rem; color: var(--accent-cyan);">آپدیت خودکار گیت‌هاب</div>
         </div>
 
-        <!-- گالری شبکه مربعی داینامیک -->
+        <!-- گالری داینامیک تصاویر -->
         <div class="gallery-grid" id="galleryGrid"></div>
 
     </div>
 
     <footer>
-        <p>IR APEX STUDIO © 2026 | Powered by GitHub Pages</p>
+        <p>IR APEX STUDIO © 2026 | All Rights Reserved</p>
     </footer>
 
-    <!-- موزیک پس‌زمینه سایبرپونک -->
+    <!-- پلیر موزیک مخفی -->
     <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a7321d.mp3?filename=cyberpunk-2099-10701.mp3"></audio>
 
     <script>
-        // ۱. دریافت خودکار تصاویر از پوشه images گیت‌هاب
+        // خواندن خودکار عکس‌ها از پوشه images گیت‌هاب
         const username = 'solowayiq-stack';
         const repo = 'my-website';
         const galleryGrid = document.getElementById('galleryGrid');
@@ -429,22 +359,22 @@
                 if(Array.isArray(files)) {
                     files.forEach(file => {
                         if (file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
-                            const item = document.createElement('div');
-                            item.className = 'gallery-item';
-                            item.innerHTML = `
+                            const card = document.createElement('div');
+                            card.className = 'gallery-card';
+                            card.innerHTML = `
                                 <img src="images/${file.name}" alt="Apex Art">
-                                <div class="gallery-overlay">
-                                    <span style="color:#fff; font-weight:bold; font-size:0.95rem;">${file.name.split('.')[0]}</span>
+                                <div class="gallery-info">
+                                    <span style="color:#fff; font-weight:700; font-size:0.9rem;">${file.name.split('.')[0]}</span>
                                 </div>
                             `;
-                            galleryGrid.appendChild(item);
+                            galleryGrid.appendChild(card);
                         }
                     });
                 }
             })
-            .catch(err => console.log('خطا در دریافت تصاویر:', err));
+            .catch(err => console.log('خطا در بارگذاری تصاویر:', err));
 
-        // ۲. پخش/توقف موزیک
+        // کنترل موزیک پس‌زمینه
         const musicBtn = document.getElementById('musicBtn');
         const bgMusic = document.getElementById('bgMusic');
         let isPlaying = false;
@@ -452,78 +382,15 @@
         musicBtn.addEventListener('click', () => {
             if(!isPlaying) {
                 bgMusic.play();
-                musicBtn.innerHTML = '<i class="ri-volume-up-fill" style="color:var(--accent-cyan)"></i>';
+                musicBtn.style.borderColor = 'var(--accent-cyan)';
+                musicBtn.style.color = 'var(--accent-cyan)';
             } else {
                 bgMusic.pause();
-                musicBtn.innerHTML = '<i class="ri-music-2-line"></i>';
+                musicBtn.style.borderColor = 'var(--card-border)';
+                musicBtn.style.color = 'var(--text-main)';
             }
             isPlaying = !isPlaying;
         });
-
-        // ۳. تغییر حالت تم
-        const themeBtn = document.getElementById('themeBtn');
-        const html = document.documentElement;
-
-        themeBtn.addEventListener('click', () => {
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            html.setAttribute('data-theme', newTheme);
-            themeBtn.innerHTML = newTheme === 'dark' ? '<i class="ri-sun-line"></i>' : '<i class="ri-moon-line"></i>';
-        });
-
-        // ۴. انیمیشن ذرات و خطوط درخشان زمینه
-        const canvas = document.getElementById('particles-canvas');
-        const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        const particles = [];
-        for (let i = 0; i < 45; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.7,
-                vy: (Math.random() - 0.5) * 0.7,
-                radius: Math.random() * 2 + 1
-            });
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particles.length; i++) {
-                let p = particles[i];
-                p.x += p.vx;
-                p.y += p.vy;
-
-                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(0, 242, 254, 0.6)';
-                ctx.fill();
-
-                for (let j = i + 1; j < particles.length; j++) {
-                    let p2 = particles[j];
-                    let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    if (dist < 130) {
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.strokeStyle = `rgba(0, 242, 254, ${0.25 - dist / 600})`;
-                        ctx.lineWidth = 0.6;
-                        ctx.stroke();
-                    }
-                }
-            }
-            requestAnimationFrame(animate);
-        }
-        animate();
     </script>
 </body>
 </html>
