@@ -13,7 +13,7 @@
     <style>
         /* متغیرهای تم لایت (پیش‌فرض) */
         :root {
-            --bg-color: #f4f6fc;
+            --bg-color: #ffffff;
             --card-bg: rgba(255, 255, 255, 0.88);
             --card-border: rgba(226, 232, 240, 0.9);
             --card-border-hover: #0284c7;
@@ -23,15 +23,17 @@
             --accent-cyan-glow: rgba(2, 132, 199, 0.15);
             --accent-purple: #7c3aed;
             --glass-blur: blur(20px);
-            --shadow-clean: 0 16px 36px rgba(15, 23, 42, 0.05);
-            --header-bg: rgba(244, 246, 252, 0.85);
-            --gallery-img-bg: #e2e8f0;
+            --shadow-clean: 0 16px 36px rgba(15, 23, 42, 0.08);
+            --header-bg: rgba(255, 255, 255, 0.85);
+            --gallery-img-bg: #f1f5f9;
+            --fade-gradient-start: rgba(255, 255, 255, 0);
+            --fade-gradient-end: #ffffff;
         }
 
         /* متغیرهای تم دارک */
         [data-theme="dark"] {
             --bg-color: #06080e;
-            --card-bg: rgba(15, 20, 32, 0.75);
+            --card-bg: rgba(15, 20, 32, 0.82);
             --card-border: rgba(255, 255, 255, 0.08);
             --card-border-hover: #00f2fe;
             --text-main: #ffffff;
@@ -42,6 +44,8 @@
             --shadow-clean: 0 20px 40px rgba(0, 0, 0, 0.45);
             --header-bg: rgba(6, 8, 14, 0.85);
             --gallery-img-bg: #0f1420;
+            --fade-gradient-start: rgba(6, 8, 14, 0);
+            --fade-gradient-end: #06080e;
         }
 
         * {
@@ -65,21 +69,55 @@
             padding-bottom: 60px;
         }
 
-        /* پس‌زمینه زنده و مدرن */
-        .ambient-glow {
-            position: fixed;
+        /* پس‌زمینه عکس بازی شلوغ بالا با فید شدن به سمت پایین */
+        .game-bg-container {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 650px;
             z-index: 0;
-            pointer-events: none;
             overflow: hidden;
-            background: radial-gradient(circle at 10% 15%, var(--accent-cyan-glow) 0%, transparent 45%),
-                        radial-gradient(circle at 90% 85%, rgba(124, 58, 237, 0.08) 0%, transparent 45%);
+            pointer-events: none;
         }
 
-        /* هدر حرفه‌ای و رسمی */
+        .game-bg-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            opacity: 0.35;
+            filter: contrast(1.1) saturate(1.2);
+        }
+
+        [data-theme="dark"] .game-bg-img {
+            opacity: 0.25;
+        }
+
+        /* ماسک فید تدریجی از وسط به پایین به سمت رنگ سفید/دارک */
+        .game-bg-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0.2) 0%,
+                var(--fade-gradient-start) 30%,
+                var(--fade-gradient-end) 90%,
+                var(--fade-gradient-end) 100%
+            );
+        }
+
+        [data-theme="dark"] .game-bg-overlay {
+            background: linear-gradient(
+                to bottom,
+                rgba(6, 8, 14, 0.4) 0%,
+                var(--fade-gradient-start) 30%,
+                var(--fade-gradient-end) 90%,
+                var(--fade-gradient-end) 100%
+            );
+        }
+
+        /* هدر حرفه‌ای */
         header {
             position: fixed;
             top: 0;
@@ -95,7 +133,6 @@
             border-bottom: 1px solid var(--card-border);
         }
 
-        /* لوگو با فونت بولد چسبیده */
         .brand-container {
             display: flex;
             align-items: center;
@@ -441,8 +478,12 @@
 </head>
 <body data-theme="light">
 
-    <!-- پس‌زمینه محیطی -->
-    <div class="ambient-glow"></div>
+    <!-- پس‌زمینه عکس بازی شلوغ و محو شونده به طیف سفید -->
+    <div class="game-bg-container">
+        <!-- عکس باکیفیت و اکشن از بنر گیمینگ شلوغ -->
+        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1600&q=80" class="game-bg-img" alt="Gaming Banner">
+        <div class="game-bg-overlay"></div>
+    </div>
 
     <!-- هدر سایت -->
     <header>
@@ -564,13 +605,9 @@
         /* =========================================================================
            لیست عکس‌های گالری
            کافیست اسم فایل‌های عکسی که توی پوشه images آپلود می‌کنی رو اینجا اضافه کنی.
-           مثلاً: { file: 'shsjjaj37.png', title: 'عنوان دلخواه عکس' }
-           هرچند تا عکس که خواستی می‌تونی با همین الگو اضافه کنی!
         ========================================================================= */
         const galleryImages = [
             { file: 'img1.png', title: 'آرت‌ورک آپکس' },
-            // اینجا می‌تونی عکس‌های بیشتر اضافه کنی:
-            // { file: ' اسم_فایل_بعدی.png ', title: 'توضیح عکس' }
         ];
 
         const galleryGrid = document.getElementById('galleryGrid');
