@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl" data-theme="light">
+<html lang="fa" dir="rtl" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,24 +10,25 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #f4f6f9;
-            --text-color: #1a1d21;
-            --card-bg: #ffffff;
-            --card-text: #22252a;
-            --accent-color: #ff3e3e;
-            --header-bg: rgba(255, 255, 255, 0.85);
-            --shadow: 0 20px 40px rgba(0,0,0,0.08);
-            --border-radius: 24px;
+            --bg-color: #030712;
+            --card-bg: rgba(15, 23, 42, 0.75);
+            --card-border: rgba(56, 189, 248, 0.2);
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --accent-cyan: #00f2fe;
+            --accent-pink: #ff007f;
+            --accent-purple: #8a2be2;
+            --glow-shadow: 0 10px 30px -5px rgba(0, 242, 254, 0.2);
+            --glass-blur: blur(20px);
         }
 
-        [data-theme="dark"] {
-            --bg-color: #0f1115;
-            --text-color: #f0f6fc;
-            --card-bg: #181b20;
-            --card-text: #ffffff;
-            --accent-color: #00f2fe;
-            --header-bg: rgba(15, 17, 21, 0.85);
-            --shadow: 0 20px 40px rgba(0,0,0,0.5);
+        [data-theme="light"] {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.85);
+            --card-border: rgba(255, 0, 127, 0.25);
+            --text-main: #ffffff;
+            --text-sub: #cbd5e1;
+            --glow-shadow: 0 10px 30px -5px rgba(255, 0, 127, 0.25);
         }
 
         * {
@@ -35,15 +36,16 @@
             margin: 0;
             padding: 0;
             font-family: 'Vazirmatn', sans-serif;
-            transition: background 0.3s, color 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-main);
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
+            padding-bottom: 60px;
         }
 
         /* ذرات متحرک پس‌زمینه */
@@ -55,11 +57,9 @@
             height: 100%;
             z-index: 0;
             pointer-events: none;
-            background: radial-gradient(circle, #2a2d32 0%, #111215 100%);
-            opacity: 0.25;
         }
 
-        /* هدر بالای صفحه */
+        /* هدر نئونی مدرن */
         header {
             position: fixed;
             top: 0;
@@ -67,304 +67,411 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 5%;
-            background: var(--header-bg);
-            backdrop-filter: blur(12px);
+            padding: 16px 8%;
+            background: rgba(3, 7, 18, 0.8);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            border-bottom: 1px solid var(--card-border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
 
-        .logo-box {
+        .brand-logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 1.4rem;
-            font-weight: 900;
-            letter-spacing: 1px;
-        }
-
-        .logo-box i {
-            font-size: 1.8rem;
-            color: var(--accent-color);
-        }
-
-        .nav-controls {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .theme-toggle, .hamburger-btn {
-            background: none;
-            border: none;
+            gap: 12px;
             font-size: 1.5rem;
-            color: var(--text-color);
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 50%;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
         }
 
-        /* منوی همبرگری موبایل */
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 70px;
-            right: 0;
-            width: 100%;
-            background: var(--header-bg);
-            backdrop-filter: blur(15px);
-            padding: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            z-index: 999;
-            flex-direction: column;
-            gap: 15px;
-            text-align: center;
-        }
-
-        .mobile-menu.active {
+        .header-actions {
             display: flex;
+            gap: 12px;
         }
 
-        .mobile-menu a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
+        .action-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.3rem;
+            backdrop-filter: var(--glass-blur);
         }
 
-        /* بخش اصلی و کاور عمودی */
-        .main-container {
+        .action-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
+        }
+
+        /* کانتینر اصلی */
+        .wrapper {
             position: relative;
             z-index: 10;
-            padding-top: 100px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            max-width: 1250px;
+            margin: 120px auto 0 auto;
+            padding: 0 20px;
         }
 
-        .hero-vertical-card {
+        /* گرید مربعی اصلی */
+        .square-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        /* کارت‌های مربعی با لایتینگ نئونی */
+        .square-card {
             background: var(--card-bg);
-            color: var(--card-text);
-            width: 90%;
-            max-width: 480px;
-            min-height: 480px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            padding: 40px 25px;
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 30px;
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            box-shadow: var(--glow-shadow);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.1);
-            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .hero-vertical-card h1 {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-        }
-
-        .hero-vertical-card p {
+        .square-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-pink), var(--accent-purple));
             opacity: 0.8;
-            font-size: 0.95rem;
-            line-height: 1.7;
         }
 
-        .card-menu-btns {
+        .square-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 15px 35px rgba(0, 242, 254, 0.3);
+        }
+
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.15), rgba(255, 0, 127, 0.15));
+            border: 1px solid rgba(0, 242, 254, 0.3);
             display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 25px;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--accent-cyan);
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
         }
 
-        .card-btn {
-            padding: 14px;
-            border-radius: 14px;
-            border: none;
-            background: var(--bg-color);
-            color: var(--text-color);
-            font-weight: 700;
-            cursor: pointer;
+        .card-title {
+            font-size: 1.35rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            line-height: 1.8;
+        }
+
+        /* بخش راه‌های ارتباطی */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .social-btn {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            padding: 14px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
             text-decoration: none;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-            transition: transform 0.2s, background 0.2s, color 0.2s;
-        }
-
-        .card-btn:hover {
-            transform: translateY(-2px);
-            background: var(--accent-color);
-            color: #fff;
-        }
-
-        /* گالری داینامیک کارت‌ها */
-        .section-title {
-            font-size: 1.8rem;
             font-weight: 800;
-            margin-bottom: 40px;
-            text-align: center;
+            font-size: 0.9rem;
         }
 
-        .gallery-grid {
+        .social-btn:hover {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.4);
+            transform: scale(1.03);
+        }
+
+        /* تیتر بخش‌ها */
+        .section-header {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 40px;
-            max-width: 1200px;
-            width: 90%;
-            padding-bottom: 80px;
+            justify-content: space-between;
+            align-items: center;
+            margin: 45px 0 25px 0;
         }
 
-        .popout-card {
+        .section-title {
+            font-size: 1.7rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #fff, var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* گالری مربعی پروژه‌ها */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 22px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1 / 1;
+            border-radius: 22px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--card-border);
             background: var(--card-bg);
-            border-radius: 20px;
-            width: 280px;
-            padding: 15px;
-            position: relative;
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-            margin-top: 40px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
         }
 
-        .popout-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-        }
-
-        .img-container {
-            position: relative;
-            height: 240px;
+        .gallery-item img {
             width: 100%;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #2a2d32, #111215);
-            overflow: visible; /* پشتیبانی از بیرون زدن عکس PNG */
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
         }
 
-        .img-container img {
+        .gallery-item:hover {
+            border-color: var(--accent-pink);
+            box-shadow: 0 15px 35px rgba(255, 0, 127, 0.35);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
             position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 110%;
-            max-height: 280px;
-            object-fit: contain;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.4));
+            inset: 0;
+            background: linear-gradient(to top, rgba(3, 7, 18, 0.9), transparent);
+            opacity: 0;
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+            transition: 0.3s;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        /* آمار استودیو */
+        .stats-box {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .stat-num {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
+        }
+
+        .stat-label {
+            font-size: 0.78rem;
+            color: var(--text-sub);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 70px;
+            font-size: 0.88rem;
+            color: var(--text-sub);
         }
     </style>
 </head>
 <body>
 
-    <!-- پس‌زمینه ذرات زنده -->
+    <!-- بوم انیمیشنی ذرات متحرک -->
     <canvas id="particles-canvas"></canvas>
 
-    <!-- هدر -->
+    <!-- هدر سایت -->
     <header>
-        <div class="logo-box">
-            <i class="ri-gamepad-line"></i>
-            <span>irApexStudio</span>
+        <div class="brand-logo">
+            <i class="ri-gamepad-fill" style="color: var(--accent-cyan);"></i>
+            <span>IR Apex Studio</span>
         </div>
-        <div class="nav-controls">
-            <button class="theme-toggle" id="themeBtn" title="تغییر تم">
-                <i class="ri-moon-line"></i>
+        <div class="header-actions">
+            <button class="action-btn" id="musicBtn" title="پخش موزیک گیمینگ">
+                <i class="ri-music-2-line"></i>
             </button>
-            <button class="hamburger-btn" id="menuBtn">
-                <i class="ri-menu-3-line"></i>
+            <button class="action-btn" id="themeBtn" title="تغییر حالت تم">
+                <i class="ri-sun-line"></i>
             </button>
         </div>
     </header>
 
-    <!-- منوی همبرگری -->
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="#gallery">گالری پروژه‌ها</a>
-        <a href="#about">درباره ما</a>
-        <a href="#contact">ارتباط با استودیو</a>
-    </div>
+    <div class="wrapper">
 
-    <!-- بدنه اصلی -->
-    <div class="main-container">
+        <!-- شبکه مربعی مدرن -->
+        <div class="square-grid">
 
-        <!-- کاور عمودی اصلی -->
-        <div class="hero-vertical-card">
-            <div>
-                <i class="ri-code-s-slash-line" style="font-size: 2.5rem; color: var(--accent-color);"></i>
-                <h1 style="margin-top: 15px;">IR APEX STUDIO</h1>
-                <p>مرجع توسعه و انتشار بازی‌های مستقل نسل جدید.</p>
+            <!-- کارت ۱: معرفی اصلی استودیو -->
+            <div class="square-card">
+                <div>
+                    <div class="card-icon"><i class="ri-rocket-2-fill"></i></div>
+                    <div class="card-title">توسعه بازی‌های مستقل</div>
+                    <div class="card-desc">استودیو IR Apex خالق بازی‌های اکشن و بتل‌رویال نسل جدید با استفاده از متدهای روز بازی‌سازی و موتور Unity.</div>
+                </div>
+                <div class="stats-box">
+                    <div>
+                        <div class="stat-num">+۵</div>
+                        <div class="stat-label">پروژه فعال</div>
+                    </div>
+                    <div>
+                        <div class="stat-num">Unity</div>
+                        <div class="stat-label">موتور اصلی</div>
+                    </div>
+                </div>
             </div>
 
-            <div class="card-menu-btns">
-                <a href="#gallery" class="card-btn">
-                    <i class="ri-image-line"></i> گالری تصاویر و آرکویو
-                </a>
-                <a href="#about" class="card-btn">
-                    <i class="ri-information-line"></i> درباره استودیو
-                </a>
-                <a href="#contact" class="card-btn">
-                    <i class="ri-mail-send-line"></i> راه های ارتباطی
-                </a>
+            <!-- کارت ۲: درباره استودیو -->
+            <div class="square-card" id="about">
+                <div>
+                    <div class="card-icon"><i class="ri-user-star-fill"></i></div>
+                    <div class="card-title">درباره استودیو</div>
+                    <div class="card-desc">ما مجموعه‌ای متشکل از گیمرهای حرفه‌ای و توسعه‌دهندگان عاشق صنعت بازی‌سازی هستیم که هدفمان خلق تجربه‌های هیجان‌انگیز، دوپامینی و باکیفیت برای دنیای گیم است.</div>
+                </div>
             </div>
 
-            <p style="font-size: 0.75rem; opacity: 0.5;">© نسخه رسمی IR Apex Studio</p>
+            <!-- کارت ۳: راه‌های ارتباطی -->
+            <div class="square-card" id="contact">
+                <div>
+                    <div class="card-icon"><i class="ri-chat-3-fill"></i></div>
+                    <div class="card-title">راه های ارتباطی</div>
+                    <div class="card-desc">جهت ارتباط مستقیم با مدیریت، مشاوره، ارسال پیشنهاد یا همکاری، می‌توانید از لینک‌های زیر استفاده کنید:</div>
+                    
+                    <div class="social-grid">
+                        <a href="https://eitaa.com/UnityHub_Admin" target="_blank" class="social-btn">
+                            <i class="ri-send-plane-fill" style="color: #ff6f00;"></i> ایتا
+                        </a>
+                        <a href="https://rubika.ir/UnityHub_Admin" target="_blank" class="social-btn">
+                            <i class="ri-message-3-fill" style="color: #a855f7;"></i> روبیکا
+                        </a>
+                        <a href="https://t.me/UnityHub_Admin" target="_blank" class="social-btn">
+                            <i class="ri-telegram-fill" style="color: #38bdf8;"></i> تلگرام
+                        </a>
+                        <a href="https://github.com/solowayiq-stack" target="_blank" class="social-btn">
+                            <i class="ri-github-fill"></i> گیت‌هاب
+                        </a>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <!-- بخش گالری عکس‌ها -->
-        <h2 class="section-title" id="gallery">گالری پروژه‌ها و آرت‌ها</h2>
-        
-        <!-- کارت‌های عکس خودکار اینجا ساخته میشن -->
+        <!-- تیتر گالری پروژه‌ها -->
+        <div class="section-header" id="gallery">
+            <div class="section-title">گالری و کانپست‌آرت‌ها</div>
+            <div style="font-size: 0.85rem; color: var(--accent-cyan);">بروزرسانی هوشمند منبع تصاویر</div>
+        </div>
+
+        <!-- گالری شبکه مربعی داینامیک -->
         <div class="gallery-grid" id="galleryGrid"></div>
 
     </div>
 
-    <!-- اسکریپت‌ها -->
-    <script>
-        // ==========================================
-        // 📸 بخش مدیریت و اضافه کردن عکس‌های جدید (خیلی ساده):
-        // فقط اسم فایل‌هایی که توی پوشه images می‌ذاری رو اینجا اضافه کن:
-        // ==========================================
-        const myImages = [
-            "img.png",
-            "img2.png",
-            "img3.png",
-            "img4.png"
-        ];
+    <footer>
+        <p>IR APEX STUDIO © 2026 | Powered by GitHub Pages</p>
+    </footer>
 
-        // جاوااسکریپت خودکار کارت‌ها رو می‌سازه:
+    <!-- موزیک پس‌زمینه سایبرپونک -->
+    <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a7321d.mp3?filename=cyberpunk-2099-10701.mp3"></audio>
+
+    <script>
+        // ۱. دریافت خودکار تصاویر از پوشه images گیت‌هاب
+        const username = 'solowayiq-stack';
+        const repo = 'my-website';
         const galleryGrid = document.getElementById('galleryGrid');
-        
-        myImages.forEach(imgName => {
-            const card = document.createElement('div');
-            card.className = 'popout-card';
-            card.innerHTML = `
-                <div class="img-container">
-                    <img src="images/${imgName}" alt="IR Apex Art" onerror="this.src='https://via.placeholder.com/250x300/transparent/ffffff?text=Image+Not+Found'">
-                </div>
-            `;
-            galleryGrid.appendChild(card);
+
+        fetch(`https://api.github.com/repos/${username}/${repo}/contents/images`)
+            .then(response => response.json())
+            .then(files => {
+                if(Array.isArray(files)) {
+                    files.forEach(file => {
+                        if (file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
+                            const item = document.createElement('div');
+                            item.className = 'gallery-item';
+                            item.innerHTML = `
+                                <img src="images/${file.name}" alt="Apex Art">
+                                <div class="gallery-overlay">
+                                    <span style="color:#fff; font-weight:bold; font-size:0.95rem;">${file.name.split('.')[0]}</span>
+                                </div>
+                            `;
+                            galleryGrid.appendChild(item);
+                        }
+                    });
+                }
+            })
+            .catch(err => console.log('خطا در دریافت تصاویر:', err));
+
+        // ۲. پخش/توقف موزیک
+        const musicBtn = document.getElementById('musicBtn');
+        const bgMusic = document.getElementById('bgMusic');
+        let isPlaying = false;
+
+        musicBtn.addEventListener('click', () => {
+            if(!isPlaying) {
+                bgMusic.play();
+                musicBtn.innerHTML = '<i class="ri-volume-up-fill" style="color:var(--accent-cyan)"></i>';
+            } else {
+                bgMusic.pause();
+                musicBtn.innerHTML = '<i class="ri-music-2-line"></i>';
+            }
+            isPlaying = !isPlaying;
         });
 
-        // ۱. سوئیچ تم
+        // ۳. تغییر حالت تم
         const themeBtn = document.getElementById('themeBtn');
         const html = document.documentElement;
 
         themeBtn.addEventListener('click', () => {
             const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             html.setAttribute('data-theme', newTheme);
-            themeBtn.innerHTML = newTheme === 'light' ? '<i class="ri-moon-line"></i>' : '<i class="ri-sun-line"></i>';
+            themeBtn.innerHTML = newTheme === 'dark' ? '<i class="ri-sun-line"></i>' : '<i class="ri-moon-line"></i>';
         });
 
-        // ۲. منوی همبرگری
-        const menuBtn = document.getElementById('menuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('active');
-        });
-
-        // ۳. انیمیشن ذرات پس‌زمینه
+        // ۴. انیمیشن ذرات و خطوط درخشان زمینه
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -376,21 +483,19 @@
         window.addEventListener('resize', resizeCanvas);
 
         const particles = [];
-        const particleCount = 45;
-
-        for (let i = 0; i < particleCount; i++) {
+        for (let i = 0; i < 45; i++) {
             particles.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.8,
-                vy: (Math.random() - 0.5) * 0.8,
+                vx: (Math.random() - 0.5) * 0.7,
+                vy: (Math.random() - 0.5) * 0.7,
                 radius: Math.random() * 2 + 1
             });
         }
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particleCount; i++) {
+            for (let i = 0; i < particles.length; i++) {
                 let p = particles[i];
                 p.x += p.vx;
                 p.y += p.vy;
@@ -400,18 +505,18 @@
 
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = '#ffffff';
+                ctx.fillStyle = 'rgba(0, 242, 254, 0.6)';
                 ctx.fill();
 
-                for (let j = i + 1; j < particleCount; j++) {
+                for (let j = i + 1; j < particles.length; j++) {
                     let p2 = particles[j];
                     let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    if (dist < 120) {
+                    if (dist < 130) {
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(p2.x, p2.y);
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${1 - dist / 120})`;
-                        ctx.lineWidth = 0.5;
+                        ctx.strokeStyle = `rgba(0, 242, 254, ${0.25 - dist / 600})`;
+                        ctx.lineWidth = 0.6;
                         ctx.stroke();
                     }
                 }
