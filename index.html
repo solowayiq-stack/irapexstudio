@@ -147,7 +147,7 @@
             color: var(--card-text);
             width: 90%;
             max-width: 480px;
-            min-height: 520px;
+            min-height: 480px;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             padding: 40px 25px;
@@ -201,7 +201,7 @@
             color: #fff;
         }
 
-        /* کارت‌های پروژه‌ها (کارت‌های صاف مناسب عکس کج) */
+        /* گالری داینامیک کارت‌ها */
         .section-title {
             font-size: 1.8rem;
             font-weight: 800;
@@ -209,12 +209,12 @@
             text-align: center;
         }
 
-        .projects-grid {
+        .gallery-grid {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 40px;
-            max-width: 1100px;
+            max-width: 1200px;
             width: 90%;
             padding-bottom: 80px;
         }
@@ -222,12 +222,12 @@
         .popout-card {
             background: var(--card-bg);
             border-radius: 20px;
-            width: 300px;
-            padding: 20px;
+            width: 280px;
+            padding: 15px;
             position: relative;
             box-shadow: var(--shadow);
             transition: all 0.3s ease;
-            margin-top: 50px;
+            margin-top: 40px;
         }
 
         .popout-card:hover {
@@ -237,12 +237,11 @@
 
         .img-container {
             position: relative;
-            height: 220px;
+            height: 240px;
             width: 100%;
             border-radius: 12px;
             background: linear-gradient(135deg, #2a2d32, #111215);
-            margin-bottom: 15px;
-            overflow: visible; /* امکان خروج بخش سر کاراکتر از باکس */
+            overflow: visible; /* پشتیبانی از بیرون زدن عکس PNG */
         }
 
         .img-container img {
@@ -250,20 +249,10 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 115%;
-            max-height: 270px;
+            width: 110%;
+            max-height: 280px;
             object-fit: contain;
             filter: drop-shadow(0 10px 15px rgba(0,0,0,0.4));
-        }
-
-        .card-info h3 {
-            font-size: 1.3rem;
-            margin-bottom: 5px;
-        }
-
-        .card-info p {
-            font-size: 0.85rem;
-            opacity: 0.7;
         }
     </style>
 </head>
@@ -290,7 +279,7 @@
 
     <!-- منوی همبرگری -->
     <div class="mobile-menu" id="mobileMenu">
-        <a href="#projects">پروژه‌ها</a>
+        <a href="#gallery">گالری پروژه‌ها</a>
         <a href="#about">درباره ما</a>
         <a href="#contact">ارتباط با استودیو</a>
     </div>
@@ -298,7 +287,7 @@
     <!-- بدنه اصلی -->
     <div class="main-container">
 
-        <!-- کاور مستطیلی عمودی سفید -->
+        <!-- کاور عمودی اصلی -->
         <div class="hero-vertical-card">
             <div>
                 <i class="ri-code-s-slash-line" style="font-size: 2.5rem; color: var(--accent-color);"></i>
@@ -307,8 +296,8 @@
             </div>
 
             <div class="card-menu-btns">
-                <a href="#projects" class="card-btn">
-                    <i class="ri-rocket-line"></i> پروژه‌های در حال توسعه
+                <a href="#gallery" class="card-btn">
+                    <i class="ri-image-line"></i> گالری تصاویر و آرکویو
                 </a>
                 <a href="#about" class="card-btn">
                     <i class="ri-information-line"></i> درباره استودیو
@@ -321,39 +310,41 @@
             <p style="font-size: 0.75rem; opacity: 0.5;">© نسخه رسمی IR Apex Studio</p>
         </div>
 
-        <!-- بخش پروژه‌ها -->
-        <h2 class="section-title" id="projects">پروژه‌های در حال توسعه</h2>
+        <!-- بخش گالری عکس‌ها -->
+        <h2 class="section-title" id="gallery">گالری پروژه‌ها و آرت‌ها</h2>
         
-        <div class="projects-grid">
-
-            <!-- کارت ۱: کاراکتر -->
-            <div class="popout-card">
-                <div class="img-container">
-                    <img src="images/character.png" alt="Apex Character" onerror="this.src='https://via.placeholder.com/250x300/transparent/ffffff?text=PNG+Character'">
-                </div>
-                <div class="card-info">
-                    <h3>Project Apex</h3>
-                    <p>بازی اکشن ۳D با کدهای سفارشی و انیمیشن‌های حرفه‌ای.</p>
-                </div>
-            </div>
-
-            <!-- کارت ۲: گودزیلا -->
-            <div class="popout-card">
-                <div class="img-container">
-                    <img src="images/godzilla.png" alt="Godzilla Boss" onerror="this.src='https://via.placeholder.com/250x300/transparent/ffffff?text=PNG+Godzilla'">
-                </div>
-                <div class="card-info">
-                    <h3>Monster Rampage</h3>
-                    <p>نبرد غول‌آسا با موجودات عظیم‌الجثه و رندر سه‌بعدی.</p>
-                </div>
-            </div>
-
-        </div>
+        <!-- کارت‌های عکس خودکار اینجا ساخته میشن -->
+        <div class="gallery-grid" id="galleryGrid"></div>
 
     </div>
 
     <!-- اسکریپت‌ها -->
     <script>
+        // ==========================================
+        // 📸 بخش مدیریت و اضافه کردن عکس‌های جدید (خیلی ساده):
+        // فقط اسم فایل‌هایی که توی پوشه images می‌ذاری رو اینجا اضافه کن:
+        // ==========================================
+        const myImages = [
+            "img.png",
+            "img2.png",
+            "img3.png",
+            "img4.png"
+        ];
+
+        // جاوااسکریپت خودکار کارت‌ها رو می‌سازه:
+        const galleryGrid = document.getElementById('galleryGrid');
+        
+        myImages.forEach(imgName => {
+            const card = document.createElement('div');
+            card.className = 'popout-card';
+            card.innerHTML = `
+                <div class="img-container">
+                    <img src="images/${imgName}" alt="IR Apex Art" onerror="this.src='https://via.placeholder.com/250x300/transparent/ffffff?text=Image+Not+Found'">
+                </div>
+            `;
+            galleryGrid.appendChild(card);
+        });
+
         // ۱. سوئیچ تم
         const themeBtn = document.getElementById('themeBtn');
         const html = document.documentElement;
@@ -373,7 +364,7 @@
             mobileMenu.classList.toggle('active');
         });
 
-        // ۳. انیمیشن ذرات و خطوط متحرک
+        // ۳. انیمیشن ذرات پس‌زمینه
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -399,7 +390,6 @@
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
             for (let i = 0; i < particleCount; i++) {
                 let p = particles[i];
                 p.x += p.vx;
