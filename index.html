@@ -365,7 +365,7 @@
             color: var(--text-main);
         }
 
-        /* باکس نمایش مدل ۳D */
+        /* باکس نمایش مدل ۳D ضدپرش */
         .model-viewer-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -564,7 +564,7 @@
             </div>
         </div>
 
-        <!-- بخش نمایش مدل سه‌بعدی تعاملی با قابلیت چرخش روان و زوم -->
+        <!-- بخش نمایش مدل سه‌بعدی تعاملی (ضدپرش و ثابت) -->
         <div class="section-header" id="3d-model">
             <i class="ri-3d-cube-sphere-line section-header-icon"></i>
             <div class="section-title">پیش‌نمایش سه‌بعدی اسلحه اسنایپر</div>
@@ -577,9 +577,13 @@
                 auto-rotate 
                 camera-controls 
                 touch-action="pan-y"
-                shadow-intensity="1" 
+                shadow-intensity="1.2" 
                 environment-image="neutral" 
                 exposure="1"
+                camera-orbit="0deg 75deg 105%"
+                min-camera-orbit="auto auto auto"
+                max-camera-orbit="auto auto auto"
+                interpolation-decay="200"
                 loading="eager">
             </model-viewer>
             <div class="model-hint">
