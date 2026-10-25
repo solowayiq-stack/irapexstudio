@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IR Apex Studio | استودیو بازی‌سازی آپکس</title>
-    <!-- Favicon (آیکون مرورگر و پروفایل سایت) -->
+    <!-- آیکون و پروفایل سایت (Favicon) -->
     <link rel="icon" type="image/png" href="images/logo.png">
     <!-- فونت وزیرمتن -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
@@ -13,41 +13,31 @@
     <!-- فونت انگلیسی مدرن برای لوگو -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800;900&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
     <style>
-        /* متغیرهای تم لایت (پیش‌فرض) */
         :root {
-            --bg-color: #ffffff;
-            --card-bg: rgba(255, 255, 255, 0.88);
-            --card-border: rgba(226, 232, 240, 0.9);
+            --card-bg: rgba(15, 23, 42, 0.78);
+            --card-border: rgba(255, 255, 255, 0.12);
             --card-border-hover: #0284c7;
-            --text-main: #0f172a;
-            --text-sub: #475569;
+            --text-main: #ffffff;
+            --text-sub: #cbd5e1;
             --accent-cyan: #0284c7;
-            --accent-cyan-glow: rgba(2, 132, 199, 0.15);
-            --accent-purple: #7c3aed;
+            --accent-cyan-glow: rgba(2, 132, 199, 0.25);
             --glass-blur: blur(20px);
-            --shadow-clean: 0 16px 36px rgba(15, 23, 42, 0.08);
-            --header-bg: rgba(255, 255, 255, 0.85);
-            --gallery-img-bg: #f1f5f9;
-            --fade-gradient-start: rgba(255, 255, 255, 0);
-            --fade-gradient-end: #ffffff;
+            --shadow-clean: 0 20px 40px rgba(0, 0, 0, 0.5);
+            --header-bg: rgba(15, 23, 42, 0.85);
+            --gallery-img-bg: #0b1120;
         }
 
-        /* متغیرهای تم دارک */
         [data-theme="dark"] {
-            --bg-color: #06080e;
-            --card-bg: rgba(15, 20, 32, 0.82);
+            --card-bg: rgba(10, 14, 23, 0.82);
             --card-border: rgba(255, 255, 255, 0.08);
             --card-border-hover: #00f2fe;
             --text-main: #ffffff;
             --text-sub: #94a3b8;
             --accent-cyan: #00f2fe;
             --accent-cyan-glow: rgba(0, 242, 254, 0.2);
-            --accent-purple: #a855f7;
-            --shadow-clean: 0 20px 40px rgba(0, 0, 0, 0.45);
-            --header-bg: rgba(6, 8, 14, 0.85);
+            --shadow-clean: 0 20px 40px rgba(0, 0, 0, 0.6);
+            --header-bg: rgba(6, 8, 14, 0.88);
             --gallery-img-bg: #0f1420;
-            --fade-gradient-start: rgba(6, 8, 14, 0);
-            --fade-gradient-end: #06080e;
         }
 
         * {
@@ -62,8 +52,12 @@
             scroll-behavior: smooth;
         }
 
+        /* والپیپر اصلی پشت تمام کادرها */
         body {
-            background-color: var(--bg-color);
+            background-image: linear-gradient(to bottom, rgba(6, 8, 14, 0.7), rgba(6, 8, 14, 0.95)), url('https://s6.uupload.ir/files/1792756652498_swc.jpg');
+            background-size: cover;
+            background-position: center top;
+            background-attachment: fixed;
             color: var(--text-main);
             min-height: 100vh;
             overflow-x: hidden;
@@ -71,54 +65,7 @@
             padding-bottom: 60px;
         }
 
-        /* پس‌زمینه عکس سفارشی شما با فید شدن به سمت پایین */
-        .game-bg-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 750px;
-            z-index: 0;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .game-bg-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center top;
-            opacity: 0.5;
-            filter: contrast(1.05) saturate(1.1);
-        }
-
-        [data-theme="dark"] .game-bg-img {
-            opacity: 0.35;
-        }
-
-        .game-bg-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                to bottom,
-                rgba(255, 255, 255, 0.05) 0%,
-                var(--fade-gradient-start) 30%,
-                var(--fade-gradient-end) 85%,
-                var(--fade-gradient-end) 100%
-            );
-        }
-
-        [data-theme="dark"] .game-bg-overlay {
-            background: linear-gradient(
-                to bottom,
-                rgba(6, 8, 14, 0.2) 0%,
-                var(--fade-gradient-start) 30%,
-                var(--fade-gradient-end) 85%,
-                var(--fade-gradient-end) 100%
-            );
-        }
-
-        /* هدر حرفه‌ای */
+        /* هدر سایت */
         header {
             position: fixed;
             top: 0;
@@ -141,7 +88,6 @@
             text-decoration: none;
         }
 
-        /* باکس اختصاصی لوگو */
         .brand-logo-box {
             width: 46px;
             height: 46px;
@@ -160,11 +106,6 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
-            mix-blend-mode: multiply;
-        }
-
-        [data-theme="dark"] .brand-logo-img {
-            mix-blend-mode: screen;
         }
 
         .brand-container:hover .brand-logo-box {
@@ -222,11 +163,11 @@
             transform: translateY(-2px);
         }
 
-        /* منوی کشویی */
+        /* منوی همبرگری */
         .mobile-menu-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(8px);
             z-index: 2000;
             opacity: 0;
@@ -254,7 +195,7 @@
             flex-direction: column;
             justify-content: space-between;
             transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: -10px 0 30px rgba(0,0,0,0.15);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.3);
         }
 
         .mobile-drawer.active {
@@ -317,6 +258,7 @@
             margin-bottom: 60px;
         }
 
+        /* کارت‌های شیشه‌ای روی والپیپر */
         .glass-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -379,16 +321,12 @@
             gap: 8px;
             padding: 11px;
             border-radius: 12px;
-            background: rgba(0, 0, 0, 0.02);
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid var(--card-border);
             color: var(--text-main);
             text-decoration: none;
             font-weight: 700;
             font-size: 0.88rem;
-        }
-
-        [data-theme="dark"] .social-btn {
-            background: rgba(255, 255, 255, 0.03);
         }
 
         .social-btn:hover {
@@ -435,15 +373,7 @@
             align-items: center;
             justify-content: center;
             padding: 12px;
-        }
-
-        .gallery-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-color: var(--gallery-img-bg);
-            opacity: 0.5;
-            z-index: 0;
+            backdrop-filter: var(--glass-blur);
         }
 
         .gallery-card img {
@@ -452,7 +382,7 @@
             object-fit: contain;
             z-index: 1;
             transition: transform 0.4s ease;
-            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.1));
+            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.3));
         }
 
         .gallery-card:hover {
@@ -467,7 +397,7 @@
         .gallery-info {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, transparent 60%);
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
             opacity: 0;
             display: flex;
             align-items: flex-end;
@@ -495,19 +425,13 @@
         }
     </style>
 </head>
-<body data-theme="light">
-
-    <!-- پس‌زمینه تصویر ارسالی شما -->
-    <div class="game-bg-container">
-        <img src="https://s6.uupload.ir/files/1792756652498_swc.jpg" class="game-bg-img" alt="IR Apex Gaming Background">
-        <div class="game-bg-overlay"></div>
-    </div>
+<body data-theme="dark">
 
     <!-- هدر سایت -->
     <header>
         <a href="#" class="brand-container">
             <div class="brand-logo-box">
-                <img src="images/logo.png" alt="IR Apex Studio Logo" class="brand-logo-img" onerror="this.onerror=null; this.src='https://s6.uupload.ir/files/1000020655_apex_logo.jpg';">
+                <img src="images/logo.png" alt="IR Apex Studio Logo" class="brand-logo-img">
             </div>
             <div class="brand-text-wrapper">
                 <span class="brand-title">irApexStudio</span>
