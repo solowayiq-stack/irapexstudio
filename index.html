@@ -365,7 +365,7 @@
             color: var(--text-main);
         }
 
-        /* استایل اختصاصی باکس نمایش ۳D */
+        /* باکس نمایش مدل ۳D */
         .model-viewer-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -380,17 +380,17 @@
 
         model-viewer {
             width: 100%;
-            height: 420px;
+            height: 450px;
             border-radius: 16px;
             background-color: transparent;
             --poster-color: transparent;
         }
 
-        .3d-hint {
+        .model-hint {
             text-align: center;
             font-size: 0.85rem;
             color: var(--text-sub);
-            margin-top: 10px;
+            margin-top: 12px;
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -564,26 +564,26 @@
             </div>
         </div>
 
-        <!-- بخش نمایش مدل سه‌بعدی تعاملی -->
+        <!-- بخش نمایش مدل سه‌بعدی تعاملی با قابلیت چرخش روان و زوم -->
         <div class="section-header" id="3d-model">
             <i class="ri-3d-cube-sphere-line section-header-icon"></i>
-            <div class="section-title">پیش‌نمایش سه‌بعدی اسلاح اسنایپر</div>
+            <div class="section-title">پیش‌نمایش سه‌بعدی اسلحه اسنایپر</div>
         </div>
 
         <div class="model-viewer-card">
-            <!-- الگوی نمایش سه‌بعدی گوگلی -->
             <model-viewer 
                 src="images/gun.glb" 
                 alt="3D Dragon Sniper Model" 
                 auto-rotate 
                 camera-controls 
-                shadow-intensity="1.5" 
+                touch-action="pan-y"
+                shadow-intensity="1" 
                 environment-image="neutral" 
                 exposure="1"
-                loading="lazy">
+                loading="eager">
             </model-viewer>
-            <div class="3d-hint">
-                <i class="ri-drag-move-fill"></i> برای چرخش، لمس کنید یا بپیچونید / زوم کنید
+            <div class="model-hint">
+                <i class="ri-drag-move-fill"></i> برای چرخش ۳۶۰ درجه و زوم کردن، روی مدل بکشید یا اسکرول کنید
             </div>
         </div>
 
@@ -626,7 +626,7 @@
             galleryGrid.appendChild(card);
         });
 
-        // تم دارک و لایت
+        // تم دارک و لایت (پیش‌فرض لایت)
         const themeToggleBtn = document.getElementById('themeToggleBtn');
         const themeIcon = document.getElementById('themeIcon');
         const bodyEl = document.body;
