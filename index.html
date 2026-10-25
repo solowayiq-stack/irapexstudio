@@ -365,7 +365,7 @@
             color: var(--text-main);
         }
 
-        /* باکس نمایش مدل ۳D ضدپرش */
+        /* باکس نمایش مدل ۳D (بدون زوم، چرخش روان و بدون پرش) */
         .model-viewer-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -564,7 +564,7 @@
             </div>
         </div>
 
-        <!-- بخش نمایش مدل سه‌بعدی تعاملی (ضدپرش و ثابت) -->
+        <!-- بخش نمایش مدل سه‌بعدی (چرخش خودکار و دستی بدون زوم و بدون پرش) -->
         <div class="section-header" id="3d-model">
             <i class="ri-3d-cube-sphere-line section-header-icon"></i>
             <div class="section-title">پیش‌نمایش سه‌بعدی اسلحه اسنایپر</div>
@@ -576,6 +576,7 @@
                 alt="3D Dragon Sniper Model" 
                 auto-rotate 
                 camera-controls 
+                disable-zoom
                 touch-action="pan-y"
                 shadow-intensity="1.2" 
                 environment-image="neutral" 
@@ -587,7 +588,7 @@
                 loading="eager">
             </model-viewer>
             <div class="model-hint">
-                <i class="ri-drag-move-fill"></i> برای چرخش ۳۶۰ درجه و زوم کردن، روی مدل بکشید یا اسکرول کنید
+                <i class="ri-drag-move-fill"></i> برای چرخش ۳۶۰ درجه اسنایپر، روی مدل بکشید
             </div>
         </div>
 
