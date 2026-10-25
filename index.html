@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IR Apex Studio | استودیو بازی‌سازی آپکس</title>
+    <!-- Favicon (آیکون مرورگر و پروفایل سایت) -->
+    <link rel="icon" type="image/png" href="images/logo.png">
     <!-- فونت وزیرمتن -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
     <!-- آیکون‌های ریمیکس -->
@@ -94,7 +96,6 @@
             opacity: 0.35;
         }
 
-        /* ماسک فید تدریجی از وسط به پایین به سمت رنگ سفید/دارک */
         .game-bg-overlay {
             position: absolute;
             inset: 0;
@@ -125,7 +126,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 18px 6%;
+            padding: 14px 6%;
             background: var(--header-bg);
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
@@ -136,21 +137,39 @@
         .brand-container {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
             text-decoration: none;
         }
 
-        .brand-icon-box {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+        /* باکس اختصاصی لوگو */
+        .brand-logo-box {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
-            font-size: 1.4rem;
+            overflow: hidden;
             box-shadow: 0 8px 20px var(--accent-cyan-glow);
+            padding: 4px;
+        }
+
+        .brand-logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            mix-blend-mode: multiply;
+        }
+
+        [data-theme="dark"] .brand-logo-img {
+            mix-blend-mode: screen;
+        }
+
+        .brand-container:hover .brand-logo-box {
+            transform: scale(1.05) rotate(-3deg);
+            border-color: var(--accent-cyan);
         }
 
         .brand-text-wrapper {
@@ -203,7 +222,7 @@
             transform: translateY(-2px);
         }
 
-        /* منوی همبرگری */
+        /* منوی کشویی */
         .mobile-menu-overlay {
             position: fixed;
             inset: 0;
@@ -397,7 +416,7 @@
             color: var(--text-main);
         }
 
-        /* گالری با پشتیبانی از PNG ترنسپرنت */
+        /* گالری */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -478,7 +497,7 @@
 </head>
 <body data-theme="light">
 
-    <!-- پس‌زمینه تصویر ارسالی شما با فید شدن به سمت پایین -->
+    <!-- پس‌زمینه تصویر ارسالی شما -->
     <div class="game-bg-container">
         <img src="https://s6.uupload.ir/files/1792756652498_swc.jpg" class="game-bg-img" alt="IR Apex Gaming Background">
         <div class="game-bg-overlay"></div>
@@ -487,8 +506,8 @@
     <!-- هدر سایت -->
     <header>
         <a href="#" class="brand-container">
-            <div class="brand-icon-box">
-                <i class="ri-gamepad-line"></i>
+            <div class="brand-logo-box">
+                <img src="images/logo.png" alt="IR Apex Studio Logo" class="brand-logo-img" onerror="this.onerror=null; this.src='https://s6.uupload.ir/files/1000020655_apex_logo.jpg';">
             </div>
             <div class="brand-text-wrapper">
                 <span class="brand-title">irApexStudio</span>
@@ -509,7 +528,7 @@
         </div>
     </header>
 
-    <!-- منوی همبرگری کشویی -->
+    <!-- منوی کشویی -->
     <div class="mobile-menu-overlay" id="menuOverlay"></div>
     <div class="mobile-drawer" id="mobileDrawer">
         <div>
@@ -564,7 +583,6 @@
             </div>
 
             <!-- کارت ۴: ارتباط با ما -->
-                        <!-- کارت ۴: کانال‌ها و ارتباط با ما -->
             <div class="glass-card" id="contact">
                 <div>
                     <div class="card-icon-box"><i class="ri-question-answer-line"></i></div>
@@ -580,7 +598,6 @@
                     </a>
                 </div>
             </div>
-
 
         </div>
 
@@ -603,10 +620,6 @@
     <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a7321d.mp3?filename=cyberpunk-2099-10701.mp3"></audio>
 
     <script>
-        /* =========================================================================
-           لیست عکس‌های گالری
-           کافیست اسم فایل‌های عکسی که توی پوشه images آپلود می‌کنی رو اینجا اضافه کنی.
-        ========================================================================= */
         const galleryImages = [
             { file: 'img1.png', title: 'پیش‌نمایش‌ پروژه‌ما‌ در‌ آینده' },
             { file: 'img-2.png', title: 'پیش‌نمایش‌ پروژه‌ما‌ در‌ آینده' }
@@ -641,7 +654,7 @@
             }
         });
 
-        // منوی همبرگری
+        // منوی کشویی
         const hamburgerBtn = document.getElementById('hamburgerBtn');
         const closeDrawerBtn = document.getElementById('closeDrawerBtn');
         const mobileDrawer = document.getElementById('mobileDrawer');
