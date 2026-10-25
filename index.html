@@ -6,6 +6,8 @@
     <title>IR Apex Studio | استودیو بازی‌سازی آپکس</title>
     <!-- آیکون و پروفایل سایت (Favicon) -->
     <link rel="icon" type="image/png" href="images/logo.png">
+    <!-- کتابخانه نمایش مدل‌های سه‌بعدی گوگل -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
     <!-- فونت وزیرمتن -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
     <!-- آیکون‌های ریمیکس -->
@@ -54,7 +56,6 @@
             scroll-behavior: smooth;
         }
 
-        /* والپیپر اصلی پشت تمام کادرها با گرادینت متناسب با تم لایت/دارک */
         body {
             background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.65), rgba(240, 244, 248, 0.92)), url('images/wallpaper.jpg');
             background-size: cover;
@@ -261,7 +262,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
             gap: 22px;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
         }
 
         /* کارت‌های شیشه‌ای */
@@ -347,7 +348,7 @@
         }
 
         .section-header {
-            margin: 40px 0 24px 0;
+            margin: 40px 0 20px 0;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -362,6 +363,39 @@
             font-size: 1.5rem;
             font-weight: 900;
             color: var(--text-main);
+        }
+
+        /* استایل اختصاصی باکس نمایش ۳D */
+        .model-viewer-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 20px;
+            backdrop-filter: var(--glass-blur);
+            box-shadow: var(--shadow-clean);
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        model-viewer {
+            width: 100%;
+            height: 420px;
+            border-radius: 16px;
+            background-color: transparent;
+            --poster-color: transparent;
+        }
+
+        .3d-hint {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-top: 10px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
 
         /* گالری */
@@ -435,7 +469,7 @@
         }
     </style>
 </head>
-<body data-theme="light"> <!-- پیش‌فرض روی حالت روشن (light) تنظیم شد -->
+<body data-theme="light">
 
     <!-- هدر سایت -->
     <header>
@@ -450,7 +484,6 @@
         </a>
 
         <div class="header-controls">
-            <!-- دکمه سوییچ تم (لایت / دارک) -->
             <button class="action-btn" id="themeToggleBtn" title="تغییر تم">
                 <i class="ri-moon-line" id="themeIcon"></i>
             </button>
@@ -463,7 +496,7 @@
         </div>
     </header>
 
-    <!-- منوی همبرگری -->
+    <!-- منوی کشویی -->
     <div class="mobile-menu-overlay" id="menuOverlay"></div>
     <div class="mobile-drawer" id="mobileDrawer">
         <div>
@@ -473,6 +506,7 @@
             </div>
             <nav class="drawer-nav">
                 <a href="#" class="drawer-link"><i class="ri-home-4-line"></i> صفحه اصلی</a>
+                <a href="#3d-model" class="drawer-link"><i class="ri-3d-cube-sphere-line"></i> مدل سه‌بعدی</a>
                 <a href="#about" class="drawer-link"><i class="ri-information-line"></i> درباره استودیو</a>
                 <a href="#projects" class="drawer-link"><i class="ri-rocket-line"></i> پروژه‌ها</a>
                 <a href="#gallery" class="drawer-link"><i class="ri-gallery-line"></i> گالری و آرت‌ورک</a>
@@ -489,8 +523,6 @@
 
         <!-- کارت‌های چهارگانه اطلاعات اصلی -->
         <div class="quad-grid">
-
-            <!-- کارت ۱: معرفی -->
             <div class="glass-card">
                 <div>
                     <div class="card-icon-box"><i class="ri-shield-flash-line"></i></div>
@@ -499,7 +531,6 @@
                 </div>
             </div>
 
-            <!-- کارت ۲: درباره ما -->
             <div class="glass-card" id="about">
                 <div>
                     <div class="card-icon-box"><i class="ri-user-star-line"></i></div>
@@ -508,7 +539,6 @@
                 </div>
             </div>
 
-            <!-- کارت ۳: پروژه‌ها -->
             <div class="glass-card" id="projects">
                 <div>
                     <div class="card-icon-box"><i class="ri-cpu-line"></i></div>
@@ -517,7 +547,6 @@
                 </div>
             </div>
 
-            <!-- کارت ۴: ارتباط با ما -->
             <div class="glass-card" id="contact">
                 <div>
                     <div class="card-icon-box"><i class="ri-question-answer-line"></i></div>
@@ -533,7 +562,29 @@
                     </a>
                 </div>
             </div>
+        </div>
 
+        <!-- بخش نمایش مدل سه‌بعدی تعاملی -->
+        <div class="section-header" id="3d-model">
+            <i class="ri-3d-cube-sphere-line section-header-icon"></i>
+            <div class="section-title">پیش‌نمایش سه‌بعدی اسلاح اسنایپر</div>
+        </div>
+
+        <div class="model-viewer-card">
+            <!-- الگوی نمایش سه‌بعدی گوگلی -->
+            <model-viewer 
+                src="images/gun.glb" 
+                alt="3D Dragon Sniper Model" 
+                auto-rotate 
+                camera-controls 
+                shadow-intensity="1.5" 
+                environment-image="neutral" 
+                exposure="1"
+                loading="lazy">
+            </model-viewer>
+            <div class="3d-hint">
+                <i class="ri-drag-move-fill"></i> برای چرخش، لمس کنید یا بپیچونید / زوم کنید
+            </div>
         </div>
 
         <!-- گالری اختصاصی -->
@@ -551,7 +602,7 @@
         <p>IR APEX STUDIO © 2026 | تمامی حقوق محفوظ است</p>
     </footer>
 
-    <!-- موزیک پس‌زمینه (برای استفاده از فایل محلی، موزیک رو با نام music.mp3 توی پوشه images آپلود کن) -->
+    <!-- موزیک پس‌زمینه -->
     <audio id="bgMusic" loop src="images/music.mp3"></audio>
 
     <script>
@@ -575,7 +626,7 @@
             galleryGrid.appendChild(card);
         });
 
-        /* سوییچ تم (لایت / دارک) - پیش‌فرض لایت */
+        // تم دارک و لایت
         const themeToggleBtn = document.getElementById('themeToggleBtn');
         const themeIcon = document.getElementById('themeIcon');
         const bodyEl = document.body;
@@ -614,7 +665,7 @@
             link.addEventListener('click', closeMenu);
         });
 
-        // کنترل موزیک پس‌زمینه (فایل محلی images/music.mp3)
+        // موزیک پس‌زمینه
         const musicBtn = document.getElementById('musicBtn');
         const bgMusic = document.getElementById('bgMusic');
         let isPlaying = false;
