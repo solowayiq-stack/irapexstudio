@@ -1,695 +1,1959 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IR Apex Studio | استودیو بازی‌سازی آپکس</title>
-    <!-- آیکون و پروفایل سایت (Favicon) -->
-    <link rel="icon" type="image/png" href="images/logo.png">
-    <!-- کتابخانه نمایش مدل‌های سه‌بعدی گوگل -->
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
-    <!-- فونت وزیرمتن -->
-    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
-    <!-- آیکون‌های ریمیکس -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <!-- فونت انگلیسی مدرن برای لوگو -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800;900&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
-    <style>
-        /* متغیرهای تم لایت (پیش‌فرض) */
-        :root {
-            --card-bg: rgba(255, 255, 255, 0.82);
-            --card-border: rgba(226, 232, 240, 0.9);
-            --card-border-hover: #0284c7;
-            --text-main: #0f172a;
-            --text-sub: #475569;
-            --accent-cyan: #0284c7;
-            --accent-cyan-glow: rgba(2, 132, 199, 0.18);
-            --glass-blur: blur(20px);
-            --shadow-clean: 0 16px 36px rgba(15, 23, 42, 0.08);
-            --header-bg: rgba(255, 255, 255, 0.85);
-            --gallery-img-bg: #f1f5f9;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b18">
+  <meta name="description" content="IR Apex Studio؛ استودیویی خلاق در زمینه طراحی سه‌بعدی، توسعه بازی، هنر دیجیتال و ساخت تجربه‌های تعاملی.">
+  <title>IR Apex Studio | فراتر از مرزهای خلاقیت</title>
 
-        /* متغیرهای تم دارک */
-        [data-theme="dark"] {
-            --card-bg: rgba(10, 14, 23, 0.82);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --card-border-hover: #00f2fe;
-            --text-main: #ffffff;
-            --text-sub: #94a3b8;
-            --accent-cyan: #00f2fe;
-            --accent-cyan-glow: rgba(0, 242, 254, 0.2);
-            --shadow-clean: 0 20px 40px rgba(0, 0, 0, 0.6);
-            --header-bg: rgba(6, 8, 14, 0.88);
-            --gallery-img-bg: #0f1420;
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Vazirmatn', sans-serif;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-        }
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-        html {
-            scroll-behavior: smooth;
-        }
+  <style>
+    :root {
+      --bg: #080b18;
+      --bg-secondary: #0d1224;
+      --panel: rgba(17, 24, 46, .76);
+      --panel-solid: #11182e;
+      --text: #f4f6ff;
+      --muted: #9da8c4;
+      --blue: #438cff;
+      --purple: #9860ff;
+      --cyan: #43d9ff;
+      --border: rgba(119, 150, 255, .19);
+      --shadow: 0 20px 70px rgba(0, 0, 0, .35);
+      --radius: 24px;
+      --header: rgba(8, 11, 24, .78);
+    }
 
-        body {
-            background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.65), rgba(240, 244, 248, 0.92)), url('images/wallpaper.jpg');
-            background-size: cover;
-            background-position: center top;
-            background-attachment: fixed;
-            color: var(--text-main);
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-            padding-bottom: 60px;
-        }
+    body.light {
+      --bg: #f3f5ff;
+      --bg-secondary: #e9edfc;
+      --panel: rgba(255, 255, 255, .82);
+      --panel-solid: #fff;
+      --text: #11182e;
+      --muted: #606b86;
+      --border: rgba(65, 99, 190, .2);
+      --shadow: 0 20px 60px rgba(53, 72, 130, .12);
+      --header: rgba(243, 245, 255, .85);
+    }
 
-        [data-theme="dark"] body {
-            background-image: linear-gradient(to bottom, rgba(6, 8, 14, 0.75), rgba(6, 8, 14, 0.95)), url('images/wallpaper.jpg');
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
 
-        /* هدر سایت */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 6%;
-            background: var(--header-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            z-index: 1000;
-            border-bottom: 1px solid var(--card-border);
-        }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Vazirmatn", sans-serif;
+      line-height: 1.9;
+      overflow-x: hidden;
+      transition: background .3s, color .3s;
+    }
 
-        .brand-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
+    button, input, textarea {
+      font: inherit;
+    }
 
-        .brand-logo-box {
-            width: 46px;
-            height: 46px;
-            border-radius: 14px;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            box-shadow: 0 8px 20px var(--accent-cyan-glow);
-            padding: 4px;
-        }
+    button, a {
+      -webkit-tap-highlight-color: transparent;
+    }
 
-        .brand-logo-img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-        .brand-container:hover .brand-logo-box {
-            transform: scale(1.05) rotate(-3deg);
-            border-color: var(--accent-cyan);
-        }
+    button {
+      color: inherit;
+    }
 
-        .brand-text-wrapper {
-            display: flex;
-            flex-direction: column;
-        }
+    ::selection {
+      background: var(--purple);
+      color: white;
+    }
 
-        .brand-title {
-            font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
-            font-size: 1.25rem;
-            font-weight: 900;
-            letter-spacing: -0.5px;
-            background: linear-gradient(120deg, var(--text-main) 40%, var(--accent-cyan) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1.1;
-        }
+    .background-grid {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      pointer-events: none;
+      opacity: .16;
+      background-image:
+        linear-gradient(rgba(104, 130, 255, .13) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(104, 130, 255, .13) 1px, transparent 1px);
+      background-size: 55px 55px;
+      mask-image: linear-gradient(to bottom, black, transparent 85%);
+    }
 
-        .brand-subtitle {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--text-sub);
-            margin-top: 2px;
-        }
+    .glow {
+      position: fixed;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      filter: blur(130px);
+      opacity: .17;
+      z-index: -2;
+      pointer-events: none;
+    }
 
-        .header-controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+    .glow.one {
+      background: #315fff;
+      top: -180px;
+      right: -100px;
+    }
 
-        .action-btn {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            color: var(--text-main);
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.2rem;
-            box-shadow: var(--shadow-clean);
-        }
+    .glow.two {
+      background: #913bff;
+      bottom: 0;
+      left: -180px;
+    }
 
-        .action-btn:hover {
-            border-color: var(--accent-cyan);
-            color: var(--accent-cyan);
-            transform: translateY(-2px);
-        }
+    .container {
+      width: min(1160px, calc(100% - 40px));
+      margin: auto;
+    }
 
-        /* منوی همبرگری */
-        .mobile-menu-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(8px);
-            z-index: 2000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
+    .heading-font,
+    h1, h2, h3,
+    .logo-name {
+      font-family: "Lalezar", cursive;
+      font-weight: 400;
+    }
 
-        .mobile-menu-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
+    .section {
+      padding: 100px 0;
+    }
 
-        .mobile-drawer {
-            position: fixed;
-            top: 0;
-            right: -320px;
-            width: 300px;
-            height: 100%;
-            background: var(--card-bg);
-            border-left: 1px solid var(--card-border);
-            backdrop-filter: var(--glass-blur);
-            z-index: 2001;
-            padding: 30px 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: -10px 0 30px rgba(0,0,0,0.2);
-        }
+    .section-heading {
+      text-align: center;
+      margin-bottom: 48px;
+    }
 
-        .mobile-drawer.active {
-            right: 0;
-        }
+    .section-heading .eyebrow {
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
 
-        .drawer-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--card-border);
-        }
+    .section-heading h2 {
+      font-size: clamp(30px, 5vw, 48px);
+      margin: 8px 0;
+    }
 
-        .drawer-close-btn {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--text-main);
-            cursor: pointer;
-        }
+    .section-heading p {
+      max-width: 650px;
+      margin: auto;
+      color: var(--muted);
+      font-size: 14px;
+    }
 
-        .drawer-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+    .gradient-text {
+      background: linear-gradient(110deg, var(--cyan), #7c8cff, #c17aff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
 
-        .drawer-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            border-radius: 12px;
-            color: var(--text-main);
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.95rem;
-        }
+    .glass {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
 
-        .drawer-link:hover {
-            background: var(--accent-cyan-glow);
-            color: var(--accent-cyan);
-        }
+    .gradient-border {
+      position: relative;
+      isolation: isolate;
+    }
 
-        /* کانتینر اصلی */
-        .wrapper {
-            position: relative;
-            z-index: 10;
-            max-width: 1200px;
-            margin: 120px auto 0 auto;
-            padding: 0 20px;
-        }
+    .gradient-border::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, var(--blue), transparent 35%, var(--purple), transparent 75%, var(--cyan));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      z-index: -1;
+    }
 
-        .quad-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-            gap: 22px;
-            margin-bottom: 40px;
-        }
+    /* Header */
 
-        /* کارت‌های شیشه‌ای */
-        .glass-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 28px;
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            box-shadow: var(--shadow-clean);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 270px;
-            position: relative;
-        }
+    header {
+      position: fixed;
+      z-index: 1000;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--header);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+    }
 
-        .glass-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--card-border-hover);
-            box-shadow: 0 20px 40px var(--accent-cyan-glow);
-        }
+    .navbar {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
 
-        .card-icon-box {
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
-            background: var(--accent-cyan-glow);
-            border: 1px solid var(--card-border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: var(--accent-cyan);
-            margin-bottom: 18px;
-        }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-            color: var(--text-main);
-        }
+    .brand img {
+      width: 46px;
+      height: 46px;
+      object-fit: contain;
+      border-radius: 14px;
+    }
 
-        .card-desc {
-            font-size: 0.92rem;
-            color: var(--text-sub);
-            line-height: 1.8;
-        }
+    .logo-name {
+      font-size: 25px;
+      line-height: 1;
+    }
 
-        .social-links-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 20px;
-        }
+    .logo-caption {
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 2px;
+      margin-top: 5px;
+      direction: ltr;
+      text-align: right;
+    }
 
-        .social-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 11px;
-            border-radius: 12px;
-            background: rgba(0, 0, 0, 0.03);
-            border: 1px solid var(--card-border);
-            color: var(--text-main);
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.88rem;
-        }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 27px;
+      list-style: none;
+    }
 
-        [data-theme="dark"] .social-btn {
-            background: rgba(255, 255, 255, 0.04);
-        }
+    .nav-links a {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      transition: .25s;
+    }
 
-        .social-btn:hover {
-            background: var(--accent-cyan-glow);
-            border-color: var(--accent-cyan);
-            color: var(--accent-cyan);
-            transform: translateY(-2px);
-        }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--cyan);
+    }
 
-        .section-header {
-            margin: 40px 0 20px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
 
-        .section-header-icon {
-            font-size: 1.5rem;
-            color: var(--accent-cyan);
-        }
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 13px;
+      cursor: pointer;
+      transition: .25s;
+    }
 
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--text-main);
-        }
+    .icon-btn:hover {
+      transform: translateY(-3px);
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
 
-        /* باکس نمایش مدل ۳D (ثابت، بدون زوم، چرخش فقط دستی و ایزوله از اسکرول صفحه) */
-        .model-viewer-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 20px;
-            backdrop-filter: var(--glass-blur);
-            box-shadow: var(--shadow-clean);
-            margin-bottom: 50px;
-            position: relative;
-            overflow: hidden;
-        }
+    .menu-toggle {
+      display: none;
+    }
 
-        model-viewer {
-            width: 100%;
-            height: 450px;
-            border-radius: 16px;
-            background-color: transparent;
-            --poster-color: transparent;
-            touch-action: none; /* جلوگیری از تداخل لگ چرخش با اسکرول صفحه */
-        }
+    /* Buttons */
 
-        .model-hint {
-            text-align: center;
-            font-size: 0.85rem;
-            color: var(--text-sub);
-            margin-top: 12px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 12px 23px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .3s;
+    }
 
-        /* گالری */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 22px;
-        }
+    .btn-primary {
+      color: white;
+      background: linear-gradient(110deg, #347cff, #8755ff);
+      box-shadow: 0 9px 30px rgba(92, 94, 255, .25);
+    }
 
-        .gallery-card {
-            aspect-ratio: 1 / 1;
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            box-shadow: var(--shadow-clean);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px;
-            backdrop-filter: var(--glass-blur);
-        }
+    .btn-primary:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 35px rgba(92, 94, 255, .4);
+    }
 
-        .gallery-card img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            z-index: 1;
-            transition: transform 0.4s ease;
-            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.15));
-        }
+    .btn-outline {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--text);
+    }
 
-        .gallery-card:hover {
-            border-color: var(--accent-cyan);
-            box-shadow: 0 12px 30px var(--accent-cyan-glow);
-        }
+    .btn-outline:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      transform: translateY(-3px);
+    }
 
-        .gallery-card:hover img {
-            transform: scale(1.08);
-        }
+    /* Hero */
 
-        .gallery-info {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
-            opacity: 0;
-            display: flex;
-            align-items: flex-end;
-            padding: 18px;
-            z-index: 2;
-            transition: opacity 0.3s ease;
-        }
+    .hero {
+      min-height: 760px;
+      padding: 160px 0 100px;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
 
-        .gallery-card:hover .gallery-info {
-            opacity: 1;
-        }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      align-items: center;
+      gap: 65px;
+    }
 
-        .gallery-title {
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 14px;
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      background: var(--panel);
+      color: var(--cyan);
+      font-size: 12px;
+      margin-bottom: 23px;
+    }
 
-        footer {
-            text-align: center;
-            margin-top: 80px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-sub);
-        }
-    </style>
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #48e7a0;
+      box-shadow: 0 0 12px #48e7a0;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 1.35;
+      margin-bottom: 20px;
+    }
+
+    .hero-description {
+      color: var(--muted);
+      max-width: 570px;
+      font-size: 15px;
+      line-height: 2.3;
+      margin-bottom: 28px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 35px;
+      flex-wrap: wrap;
+      margin-top: 45px;
+    }
+
+    .stat strong {
+      display: block;
+      font-family: "Lalezar";
+      font-size: 30px;
+      line-height: 1.3;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .hero-visual {
+      min-height: 430px;
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+
+    .hero-orbit {
+      width: min(390px, 85vw);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 1px solid rgba(100, 140, 255, .22);
+      display: grid;
+      place-items: center;
+      position: relative;
+      animation: orbit 24s linear infinite;
+    }
+
+    .hero-orbit::before,
+    .hero-orbit::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(148, 102, 255, .2);
+      border-radius: 50%;
+    }
+
+    .hero-orbit::before {
+      inset: 30px;
+    }
+
+    .hero-orbit::after {
+      inset: 65px;
+      border-color: rgba(65, 207, 255, .2);
+    }
+
+    .hero-logo {
+      width: 180px;
+      height: 180px;
+      object-fit: contain;
+      border-radius: 35px;
+      filter: drop-shadow(0 0 35px rgba(75, 115, 255, .45));
+      animation: float 5s ease-in-out infinite;
+      z-index: 2;
+    }
+
+    .orbit-point {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 20px var(--cyan);
+    }
+
+    .orbit-point.p1 { top: 14%; left: 23%; }
+    .orbit-point.p2 { right: 7%; top: 48%; background: var(--purple); box-shadow: 0 0 20px var(--purple); }
+    .orbit-point.p3 { bottom: 13%; left: 25%; background: var(--blue); box-shadow: 0 0 20px var(--blue); }
+
+    @keyframes orbit {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    /* About */
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .about-image {
+      min-height: 360px;
+      border-radius: 28px;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .about-image img {
+      width: 75%;
+      max-height: 330px;
+      object-fit: contain;
+      filter: drop-shadow(0 15px 35px rgba(70, 100, 255, .3));
+    }
+
+    .about-content h2 {
+      font-size: 39px;
+      margin-bottom: 18px;
+    }
+
+    .about-content p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 2.4;
+      margin-bottom: 15px;
+    }
+
+    .about-points {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .about-point {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .about-point i {
+      color: var(--cyan);
+    }
+
+    /* Services */
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .service-card {
+      padding: 28px;
+      border-radius: var(--radius);
+      transition: .35s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(92, 153, 255, .6);
+    }
+
+    .service-icon {
+      width: 55px;
+      height: 55px;
+      display: grid;
+      place-items: center;
+      border-radius: 17px;
+      background: linear-gradient(135deg, rgba(59, 131, 255, .2), rgba(157, 83, 255, .2));
+      color: var(--cyan);
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    .service-card h3 {
+      font-size: 23px;
+      margin-bottom: 9px;
+    }
+
+    .service-card p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 2.2;
+    }
+
+    .service-number {
+      position: absolute;
+      left: 18px;
+      top: 12px;
+      color: var(--border);
+      font-family: "Lalezar";
+      font-size: 38px;
+    }
+
+    /* Projects */
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .project-card {
+      border-radius: 22px;
+      overflow: hidden;
+      transition: .3s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-7px);
+    }
+
+    .project-image {
+      height: 210px;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-secondary);
+    }
+
+    .project-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: .5s;
+    }
+
+    .project-card:hover .project-image img {
+      transform: scale(1.07);
+    }
+
+    .project-info {
+      padding: 20px;
+    }
+
+    .project-info h3 {
+      font-size: 21px;
+      margin-bottom: 5px;
+    }
+
+    .project-info p {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .project-tag {
+      display: inline-block;
+      margin-top: 13px;
+      padding: 4px 11px;
+      border-radius: 30px;
+      background: rgba(70, 130, 255, .12);
+      color: var(--cyan);
+      font-size: 10px;
+    }
+
+    /* 3D */
+
+    .model-section {
+      padding: 65px 0;
+    }
+
+    .model-box {
+      padding: 25px;
+      border-radius: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .model-view {
+      min-height: 350px;
+      border-radius: 20px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at center, rgba(70, 110, 255, .16), transparent 65%),
+        var(--bg-secondary);
+      position: relative;
+    }
+
+    model-viewer {
+      width: 100%;
+      height: 350px;
+      background: transparent;
+      --poster-color: transparent;
+    }
+
+    .model-content h2 {
+      font-size: 35px;
+      margin-bottom: 15px;
+    }
+
+    .model-content p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 2.3;
+      margin-bottom: 20px;
+    }
+
+    .model-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* Gallery */
+
+    .gallery-filters {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 30px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      font-size: 12px;
+      transition: .25s;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: linear-gradient(110deg, #347cff, #8755ff);
+      color: white;
+      border-color: transparent;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .gallery-item {
+      height: 240px;
+      border-radius: 19px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      background: var(--bg-secondary);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: .5s;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+
+    .gallery-item::after {
+      content: "\f00e";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: rgba(5, 10, 30, .45);
+      color: white;
+      font-size: 25px;
+      opacity: 0;
+      transition: .3s;
+    }
+
+    .gallery-item:hover::after {
+      opacity: 1;
+    }
+
+    .gallery-item.hide {
+      display: none;
+    }
+
+    /* Workflow */
+
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .step {
+      text-align: center;
+      padding: 25px 16px;
+      border-radius: 20px;
+    }
+
+    .step-number {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 15px;
+      border-radius: 17px;
+      background: linear-gradient(135deg, #347cff, #8755ff);
+      color: white;
+      font-family: "Lalezar";
+      font-size: 24px;
+    }
+
+    .step h3 {
+      font-size: 20px;
+      margin-bottom: 7px;
+    }
+
+    .step p {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    /* FAQ */
+
+    .faq-list {
+      max-width: 800px;
+      margin: auto;
+      display: grid;
+      gap: 12px;
+    }
+
+    .faq-item {
+      border-radius: 17px;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      cursor: pointer;
+      text-align: right;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .faq-question i {
+      color: var(--cyan);
+      transition: .3s;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .35s ease;
+    }
+
+    .faq-answer p {
+      padding: 0 20px 20px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 2.2;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 220px;
+    }
+
+    .faq-item.open .faq-question i {
+      transform: rotate(180deg);
+    }
+
+    /* Contact */
+
+    .contact-box {
+      padding: 45px;
+      border-radius: 28px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-box h2 {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+
+    .contact-box p {
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 600px;
+      margin: 0 auto 25px;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      font-size: 13px;
+      font-weight: 700;
+      transition: .25s;
+    }
+
+    .social-link:hover {
+      transform: translateY(-4px);
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    /* Footer */
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 35px 0;
+      margin-top: 70px;
+    }
+
+    .footer-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-content p {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 15px;
+      color: var(--muted);
+    }
+
+    .footer-socials a:hover {
+      color: var(--cyan);
+    }
+
+    /* Lightbox */
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 25px;
+      background: rgba(0, 0, 0, .9);
+    }
+
+    .lightbox.show {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 95%;
+      max-height: 85vh;
+      border-radius: 15px;
+      object-fit: contain;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      left: 25px;
+      width: 45px;
+      height: 45px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .15);
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    /* Scroll top */
+
+    .scroll-top {
+      position: fixed;
+      bottom: 25px;
+      left: 25px;
+      width: 45px;
+      height: 45px;
+      border-radius: 15px;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, #347cff, #8755ff);
+      color: white;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(15px);
+      transition: .3s;
+      z-index: 500;
+    }
+
+    .scroll-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    /* Reveal */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+
+    @media (max-width: 950px) {
+      .nav-links {
+        gap: 15px;
+      }
+
+      .hero-grid {
+        gap: 25px;
+      }
+
+      .services-grid,
+      .project-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 760px) {
+      .navbar {
+        min-height: 68px;
+      }
+
+      .menu-toggle {
+        display: grid;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 68px;
+        right: 0;
+        width: 100%;
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        background: var(--panel-solid);
+        border-bottom: 1px solid var(--border);
+        transform: translateY(-150%);
+        opacity: 0;
+        visibility: hidden;
+        transition: .35s;
+      }
+
+      .nav-links.open {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .nav-links li {
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-links a {
+        display: block;
+        padding: 12px;
+      }
+
+      .hero {
+        padding-top: 125px;
+      }
+
+      .hero-grid,
+      .about-grid,
+      .model-box {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-content {
+        text-align: center;
+      }
+
+      .hero-description {
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .hero-buttons,
+      .hero-stats {
+        justify-content: center;
+      }
+
+      .hero-visual {
+        min-height: 330px;
+      }
+
+      .hero-orbit {
+        width: 290px;
+      }
+
+      .hero-logo {
+        width: 130px;
+        height: 130px;
+      }
+
+      .about-image {
+        min-height: 280px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .workflow {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .contact-box {
+        padding: 30px 18px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        width: min(100% - 28px, 1160px);
+      }
+
+      .section {
+        padding: 70px 0;
+      }
+
+      .services-grid,
+      .project-grid,
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-item {
+        height: 230px;
+      }
+
+      .about-points {
+        grid-template-columns: 1fr;
+      }
+
+      .workflow {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero-stats {
+        gap: 20px;
+      }
+
+      .hero h1 {
+        font-size: 43px;
+      }
+
+      .section-heading {
+        margin-bottom: 32px;
+      }
+
+      .footer-content {
+        justify-content: center;
+        text-align: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
 </head>
-<body data-theme="light">
 
-    <!-- هدر سایت -->
-    <header>
-        <a href="#" class="brand-container">
-            <div class="brand-logo-box">
-                <img src="images/logo.png" alt="IR Apex Studio Logo" class="brand-logo-img">
+<body>
+  <div class="background-grid"></div>
+  <div class="glow one"></div>
+  <div class="glow two"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="container navbar">
+      <a href="#home" class="brand">
+        <img src="images/logo.png" alt="لوگوی IR Apex Studio">
+        <div>
+          <div class="logo-name">IR APEX</div>
+          <div class="logo-caption">CREATIVE STUDIO</div>
+        </div>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">خانه</a></li>
+        <li><a href="#about">درباره ما</a></li>
+        <li><a href="#services">توانایی‌ها</a></li>
+        <li><a href="#projects">پروژه‌ها</a></li>
+        <li><a href="#gallery">گالری</a></li>
+        <li><a href="#contact">ارتباط</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="icon-btn" id="themeToggle" aria-label="تغییر تم">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+
+        <button class="icon-btn" id="musicToggle" aria-label="پخش موسیقی">
+          <i class="fa-solid fa-volume-high"></i>
+        </button>
+
+        <button class="icon-btn menu-toggle" id="menuToggle" aria-label="باز کردن منو">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <audio id="backgroundMusic" loop>
+    <source src="images/music.mp3" type="audio/mpeg">
+  </audio>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-content reveal">
+          <div class="hero-label">
+            <span class="live-dot"></span>
+            خلاقیت، تکنولوژی و آینده
+          </div>
+
+          <h1>
+            دنیای خودت را
+            <br>
+            <span class="gradient-text">متفاوت بساز!</span>
+          </h1>
+
+          <p class="hero-description">
+            به IR Apex Studio خوش آمدید؛ جایی که ایده‌های خلاقانه به تجربه‌های
+            دیجیتال تبدیل می‌شوند. ما در مسیر طراحی، توسعه و خلق دنیاهای جدید،
+            مرزهای معمول را کنار می‌زنیم و به دنبال ساخت چیزهایی هستیم که
+            دیده‌شدنشان ارزش داشته باشد.
+          </p>
+
+          <div class="hero-buttons">
+            <a href="#projects" class="btn btn-primary">
+              مشاهده پروژه‌ها
+              <i class="fa-solid fa-arrow-left"></i>
+            </a>
+
+            <a href="#about" class="btn btn-outline">
+              بیشتر بشناسید
+              <i class="fa-solid fa-circle-info"></i>
+            </a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat">
+              <strong class="gradient-text">3D</strong>
+              <span>طراحی سه‌بعدی</span>
             </div>
-            <div class="brand-text-wrapper">
-                <span class="brand-title">irApexStudio</span>
-                <span class="brand-subtitle">استودیو آپکس</span>
+
+            <div class="stat">
+              <strong class="gradient-text">GAME</strong>
+              <span>توسعه بازی</span>
             </div>
+
+            <div class="stat">
+              <strong class="gradient-text">ART</strong>
+              <span>هنر دیجیتال</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal">
+          <div class="hero-orbit">
+            <span class="orbit-point p1"></span>
+            <span class="orbit-point p2"></span>
+            <span class="orbit-point p3"></span>
+            <img src="images/logo.png" class="hero-logo" alt="IR Apex Studio">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="section" id="about">
+      <div class="container about-grid">
+        <div class="about-image glass gradient-border reveal">
+          <img src="images/logo.png" alt="نماد استودیوی IR Apex">
+        </div>
+
+        <div class="about-content reveal">
+          <span class="gradient-text">داستان ما</span>
+          <h2>ما فقط طراحی نمی‌کنیم؛ تجربه می‌سازیم.</h2>
+
+          <p>
+            IR Apex Studio با علاقه به دنیای دیجیتال، طراحی خلاقانه و فناوری
+            شکل گرفته است. هدف ما ایجاد فضایی برای تبدیل ایده‌های ذهنی به
+            پروژه‌هایی جذاب، کاربردی و متفاوت است.
+          </p>
+
+          <p>
+            از طراحی مدل‌های سه‌بعدی و ساخت محتوای بصری گرفته تا توسعه
+            تجربه‌های تعاملی و ایده‌پردازی برای پروژه‌های بازی؛ هر بخش از
+            فعالیت ما با توجه به جزئیات، کیفیت و هویت بصری انجام می‌شود.
+          </p>
+
+          <p>
+            باور داریم هر ایده ظرفیت تبدیل‌شدن به چیزی بزرگ‌تر را دارد؛
+            کافی است با خلاقیت، برنامه‌ریزی و پشتکار به آن فرصت رشد بدهیم.
+          </p>
+
+          <div class="about-points">
+            <div class="about-point">
+              <i class="fa-solid fa-check-circle"></i>
+              طراحی خلاقانه
+            </div>
+
+            <div class="about-point">
+              <i class="fa-solid fa-check-circle"></i>
+              توجه به جزئیات
+            </div>
+
+            <div class="about-point">
+              <i class="fa-solid fa-check-circle"></i>
+              ایده‌های متفاوت
+            </div>
+
+            <div class="about-point">
+              <i class="fa-solid fa-check-circle"></i>
+              کیفیت و نوآوری
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">WHAT WE DO</span>
+          <h2>حوزه‌های <span class="gradient-text">فعالیت ما</span></h2>
+          <p>
+            از ایده‌پردازی اولیه تا خلق خروجی نهایی، در مسیر ساخت تجربه‌های
+            دیجیتال و محتوای خلاقانه فعالیت می‌کنیم.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card glass gradient-border reveal">
+            <span class="service-number">01</span>
+            <div class="service-icon"><i class="fa-solid fa-gamepad"></i></div>
+            <h3>توسعه بازی</h3>
+            <p>
+              طراحی ایده، ساخت مکانیک‌های جذاب، بررسی تجربه کاربری و
+              شکل‌دادن به دنیای بازی‌های دیجیتال.
+            </p>
+          </article>
+
+          <article class="service-card glass gradient-border reveal">
+            <span class="service-number">02</span>
+            <div class="service-icon"><i class="fa-solid fa-cube"></i></div>
+            <h3>مدل‌سازی سه‌بعدی</h3>
+            <p>
+              خلق آبجکت‌ها، تجهیزات، محیط‌ها و مدل‌های سه‌بعدی با توجه
+              به فرم، جزئیات و هویت بصری.
+            </p>
+          </article>
+
+          <article class="service-card glass gradient-border reveal">
+            <span class="service-number">03</span>
+            <div class="service-icon"><i class="fa-solid fa-palette"></i></div>
+            <h3>طراحی کانسپت</h3>
+            <p>
+              تبدیل ایده‌های اولیه به طرح‌های بصری و ایجاد مسیر مشخص
+              برای شکل‌گیری پروژه‌های خلاقانه.
+            </p>
+          </article>
+
+          <article class="service-card glass gradient-border reveal">
+            <span class="service-number">04</span>
+            <div class="service-icon"><i class="fa-solid fa-photo-film"></i></div>
+            <h3>محتوای بصری</h3>
+            <p>
+              ساخت تصاویر، پوسترها، طرح‌های گرافیکی و محتوای دیجیتال
+              هماهنگ با هویت هر پروژه.
+            </p>
+          </article>
+
+          <article class="service-card glass gradient-border reveal">
+            <span class="service-number">05</span>
+            <div class="service-icon"><i class="fa-solid fa-vr-cardboard"></i></div>
+            <h3>تجربه تعاملی</h3>
+            <p>
+              طراحی تجربه‌هایی که مخاطب را از یک تماشاگر ساده به بخشی
+              از دنیای دیجیتال تبدیل می‌کنند.
+            </p>
+          </article>
+
+          <article class="service-card glass gradient-border reveal">
+            <span class="service-number">06</span>
+            <div class="service-icon"><i class="fa-solid fa-lightbulb"></i></div>
+            <h3>ایده‌پردازی</h3>
+            <p>
+              بررسی مسیرهای تازه، توسعه ایده‌های نو و پیدا کردن راه‌حل‌های
+              خلاقانه برای پروژه‌های مختلف.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="section" id="projects">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">OUR PROJECTS</span>
+          <h2>نگاهی به <span class="gradient-text">دنیای پروژه‌ها</span></h2>
+          <p>
+            بخشی از مسیر خلاقانه ما را در قالب نمونه‌ها و زمینه‌های کاری
+            مختلف مشاهده کنید.
+          </p>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card glass reveal">
+            <div class="project-image">
+              <img src="images/img1.png" alt="نمونه پروژه اول" loading="lazy">
+            </div>
+            <div class="project-info">
+              <h3>طراحی و مدل‌سازی</h3>
+              <p>خلق جزئیات بصری و مدل‌های دیجیتال.</p>
+              <span class="project-tag">3D DESIGN</span>
+            </div>
+          </article>
+
+          <article class="project-card glass reveal">
+            <div class="project-image">
+              <img src="images/img-2.png" alt="نمونه پروژه دوم" loading="lazy">
+            </div>
+            <div class="project-info">
+              <h3>جهان‌سازی دیجیتال</h3>
+              <p>ساخت فضاها و محیط‌های متفاوت.</p>
+              <span class="project-tag">WORLD BUILDING</span>
+            </div>
+          </article>
+
+          <article class="project-card glass reveal">
+            <div class="project-image">
+              <img src="images/img3.png" alt="نمونه پروژه سوم" loading="lazy">
+            </div>
+            <div class="project-info">
+              <h3>هنر و خلاقیت</h3>
+              <p>ترکیب ایده، طراحی و هویت بصری.</p>
+              <span class="project-tag">DIGITAL ART</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3D Model -->
+    <section class="model-section" id="model">
+      <div class="container">
+        <div class="model-box glass gradient-border reveal">
+          <div class="model-view">
+            <model-viewer
+              id="modelViewer"
+              src="images/gun.glb"
+              alt="مدل سه‌بعدی"
+              camera-controls
+              auto-rotate
+              shadow-intensity="1"
+              exposure="1"
+              environment-image="neutral"
+              loading="lazy">
+            </model-viewer>
+          </div>
+
+          <div class="model-content">
+            <span class="gradient-text">INTERACTIVE 3D</span>
+            <h2>جزئیات را از نزدیک ببین!</h2>
+            <p>
+              در این بخش می‌توانید مدل سه‌بعدی را مستقیماً در محیط سایت
+              مشاهده کنید. آن را بچرخانید، از زوایای مختلف بررسی کنید
+              و جزئیات طراحی را بهتر بشناسید.
+            </p>
+
+            <div class="model-controls">
+              <button class="btn btn-primary" id="rotateModel">
+                <i class="fa-solid fa-rotate"></i>
+                چرخش خودکار
+              </button>
+
+              <button class="btn btn-outline" id="resetModel">
+                <i class="fa-solid fa-arrows-rotate"></i>
+                بازنشانی نما
+              </button>
+
+              <button class="btn btn-outline" id="fullscreenModel">
+                <i class="fa-solid fa-expand"></i>
+                تمام‌صفحه
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="section" id="gallery">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">VISUAL GALLERY</span>
+          <h2>گالری <span class="gradient-text">تصاویر</span></h2>
+          <p>
+            مجموعه‌ای از تصاویر و نمونه‌های بصری که بخشی از فضای کاری
+            و مسیر خلاقیت استودیو را نمایش می‌دهند.
+          </p>
+        </div>
+
+        <div class="gallery-filters reveal">
+          <button class="filter-btn active" data-filter="all">همه</button>
+          <button class="filter-btn" data-filter="design">طراحی</button>
+          <button class="filter-btn" data-filter="art">هنری</button>
+          <button class="filter-btn" data-filter="project">پروژه‌ها</button>
+        </div>
+
+        <div class="gallery-grid">
+          <div class="gallery-item reveal" data-category="design">
+            <img src="images/img1.png" alt="تصویر گالری یک" loading="lazy">
+          </div>
+
+          <div class="gallery-item reveal" data-category="art">
+            <img src="images/img-2.png" alt="تصویر گالری دو" loading="lazy">
+          </div>
+
+          <div class="gallery-item reveal" data-category="project">
+            <img src="images/img3.png" alt="تصویر گالری سه" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Workflow -->
+    <section class="section" id="workflow">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">OUR PROCESS</span>
+          <h2>مسیر تبدیل <span class="gradient-text">ایده به واقعیت</span></h2>
+          <p>
+            هر پروژه با یک ایده شروع می‌شود و با طی‌کردن مراحل مشخص،
+            به یک خروجی قابل ارائه تبدیل خواهد شد.
+          </p>
+        </div>
+
+        <div class="workflow">
+          <div class="step glass reveal">
+            <div class="step-number">01</div>
+            <h3>ایده‌پردازی</h3>
+            <p>شناخت هدف، بررسی نیازها و شکل‌دادن به ایده اصلی.</p>
+          </div>
+
+          <div class="step glass reveal">
+            <div class="step-number">02</div>
+            <h3>برنامه‌ریزی</h3>
+            <p>تعیین مسیر اجرا، ابزارها و جزئیات موردنیاز پروژه.</p>
+          </div>
+
+          <div class="step glass reveal">
+            <div class="step-number">03</div>
+            <h3>خلق و توسعه</h3>
+            <p>اجرای ایده و تبدیل طرح اولیه به محصول دیجیتال.</p>
+          </div>
+
+          <div class="step glass reveal">
+            <div class="step-number">04</div>
+            <h3>بهبود نهایی</h3>
+            <p>بررسی جزئیات، اصلاحات و آماده‌سازی خروجی نهایی.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">FAQ</span>
+          <h2>سؤالات <span class="gradient-text">متداول</span></h2>
+          <p>پاسخ چند پرسش درباره استودیو و فعالیت‌های آن.</p>
+        </div>
+
+        <div class="faq-list">
+          <div class="faq-item glass reveal">
+            <button class="faq-question">
+              IR Apex Studio در چه زمینه‌هایی فعالیت می‌کند؟
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+              <p>
+                زمینه‌های فعالیت استودیو شامل طراحی سه‌بعدی، هنر دیجیتال،
+                ایده‌پردازی، توسعه بازی و ساخت تجربه‌های تعاملی است.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item glass reveal">
+            <button class="faq-question">
+              آیا امکان همکاری در پروژه‌های جدید وجود دارد؟
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+              <p>
+                برای بررسی پیشنهادهای همکاری و پروژه‌های جدید می‌توانید
+                از طریق راه‌های ارتباطی معرفی‌شده با استودیو در تماس باشید.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item glass reveal">
+            <button class="faq-question">
+              چگونه می‌توان نمونه‌کارهای بیشتری مشاهده کرد؟
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+              <p>
+                تصاویر موجود در گالری بخشی از نمونه‌ها هستند. برای مشاهده
+                مطالب و به‌روزرسانی‌های بیشتر می‌توانید شبکه‌های اجتماعی
+                رسمی استودیو را دنبال کنید.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item glass reveal">
+            <button class="faq-question">
+              چطور با تیم ارتباط برقرار کنیم؟
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+              <p>
+                از طریق صفحات رسمی استودیو در ایتا و روبیکا می‌توانید
+                پیام خود را ارسال کنید.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="contact-box glass gradient-border reveal">
+          <span class="gradient-text">LET'S CONNECT</span>
+          <h2>آماده‌ای با هم چیزی بسازیم؟</h2>
+          <p>
+            اگر ایده‌ای جذاب دارید، به دنبال همکاری هستید یا می‌خواهید
+            بیشتر با فعالیت‌های ما آشنا شوید، از راه‌های ارتباطی رسمی
+            استودیو استفاده کنید.
+          </p>
+
+          <div class="social-links">
+            <a class="social-link" href="https://eitaa.com/irApexStudio_Admin" target="_blank" rel="noopener noreferrer">
+              <i class="fa-solid fa-paper-plane"></i>
+              ارتباط در ایتا
+            </a>
+
+            <a class="social-link" href="https://rubika.ir/irApexStudio_Admin" target="_blank" rel="noopener noreferrer">
+              <i class="fa-solid fa-comments"></i>
+              ارتباط در روبیکا
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-content">
+      <div class="brand">
+        <img src="images/logo.png" alt="لوگوی IR Apex Studio">
+        <div>
+          <div class="logo-name">IR APEX STUDIO</div>
+          <div class="logo-caption">CREATE YOUR OWN WORLD</div>
+        </div>
+      </div>
+
+      <p>
+        © <span id="currentYear"></span> تمامی حقوق برای IR Apex Studio محفوظ است.
+      </p>
+
+      <div class="footer-socials">
+        <a href="https://eitaa.com/irApexStudio_Admin" target="_blank" rel="noopener noreferrer" aria-label="ایتا">
+          <i class="fa-solid fa-paper-plane"></i>
         </a>
 
-        <div class="header-controls">
-            <button class="action-btn" id="themeToggleBtn" title="تغییر تم">
-                <i class="ri-moon-line" id="themeIcon"></i>
-            </button>
-            <button class="action-btn" id="musicBtn" title="پخش موزیک پس‌زمینه">
-                <i class="ri-music-2-line"></i>
-            </button>
-            <button class="action-btn" id="hamburgerBtn" title="منو">
-                <i class="ri-menu-3-line"></i>
-            </button>
-        </div>
-    </header>
+        <a href="https://rubika.ir/irApexStudio_Admin" target="_blank" rel="noopener noreferrer" aria-label="روبیکا">
+          <i class="fa-solid fa-comments"></i>
+        </a>
 
-    <!-- منوی کشویی -->
-    <div class="mobile-menu-overlay" id="menuOverlay"></div>
-    <div class="mobile-drawer" id="mobileDrawer">
-        <div>
-            <div class="drawer-header">
-                <div class="brand-title" style="font-size: 1.1rem;">irApexStudio</div>
-                <button class="drawer-close-btn" id="closeDrawerBtn"><i class="ri-close-line"></i></button>
-            </div>
-            <nav class="drawer-nav">
-                <a href="#" class="drawer-link"><i class="ri-home-4-line"></i> صفحه اصلی</a>
-                <a href="#3d-model" class="drawer-link"><i class="ri-3d-cube-sphere-line"></i> مدل سه‌بعدی</a>
-                <a href="#about" class="drawer-link"><i class="ri-information-line"></i> درباره استودیو</a>
-                <a href="#projects" class="drawer-link"><i class="ri-rocket-line"></i> پروژه‌ها</a>
-                <a href="#gallery" class="drawer-link"><i class="ri-gallery-line"></i> گالری و آرت‌ورک</a>
-                <a href="#contact" class="drawer-link"><i class="ri-contacts-line"></i> ارتباط با ما</a>
-            </nav>
-        </div>
-        <div style="font-size: 0.8rem; color: var(--text-sub); text-align: center;">
-            IR APEX STUDIO © 2026
-        </div>
+        <a href="#home" aria-label="بازگشت به بالا">
+          <i class="fa-solid fa-arrow-up"></i>
+        </a>
+      </div>
     </div>
+  </footer>
 
-    <!-- بدنه اصلی -->
-    <div class="wrapper">
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose" aria-label="بستن">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <img src="" alt="نمایش تصویر بزرگ" id="lightboxImage">
+  </div>
 
-        <!-- کارت‌های چهارگانه اطلاعات اصلی -->
-        <div class="quad-grid">
-            <div class="glass-card">
-                <div>
-                    <div class="card-icon-box"><i class="ri-shield-flash-line"></i></div>
-                    <div class="card-title">استودیو بازی‌سازی آپکس</div>
-                    <div class="card-desc">طراح و توسعه‌دهنده پروژه‌های دیجیتال، بازی‌های ویدیویی مدرن و آرت‌ورک‌های نسل جدید با بالاترین کیفیت بصری.</div>
-                </div>
-            </div>
+  <!-- Scroll Top -->
+  <button class="scroll-top" id="scrollTop" aria-label="بازگشت به بالا">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
 
-            <div class="glass-card" id="about">
-                <div>
-                    <div class="card-icon-box"><i class="ri-user-star-line"></i></div>
-                    <div class="card-title">درباره ما</div>
-                    <div class="card-desc">تیمی متشکل از ایده‌پردازان، گرافیست‌ها و سازندگان خلاق با تمرکز بر خلق تجربه‌های گرافیکی ماندگار و استانداردهای جهانی.</div>
-                </div>
-            </div>
+  <!-- 3D Model Viewer -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
-            <div class="glass-card" id="projects">
-                <div>
-                    <div class="card-icon-box"><i class="ri-cpu-line"></i></div>
-                    <div class="card-title">پروژه‌های ما</div>
-                    <div class="card-desc">ارائه راهکارهای توسعه بازی، طراحی کانپست سه‌بعدی و خلق المان‌های بصری هوشمندانه برای بازی‌های ویدیویی.</div>
-                </div>
-            </div>
+  <script>
+    // Elements
+    const body = document.body;
+    const themeToggle = document.getElementById("themeToggle");
+    const musicToggle = document.getElementById("musicToggle");
+    const backgroundMusic = document.getElementById("backgroundMusic");
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+    const scrollTop = document.getElementById("scrollTop");
 
-            <div class="glass-card" id="contact">
-                <div>
-                    <div class="card-icon-box"><i class="ri-question-answer-line"></i></div>
-                    <div class="card-title">شبکه‌های اجتماعی و ارتباط</div>
-                    <div class="card-desc">برای دنبال کردن آخرین اخبار، به‌روزرسانی پروژه‌ها و ارتباط با مدیریت استودیو، همراه ما باشید:</div>
-                </div>
-                <div class="social-links-grid">
-                    <a href="https://eitaa.com/irApexStudio_Admin" target="_blank" class="social-btn">
-                        <i class="ri-send-plane-fill" style="color: #ff6f00;"></i> ایتا
-                    </a>
-                    <a href="https://rubika.ir/irApexStudio_Admin" target="_blank" class="social-btn">
-                        <i class="ri-message-3-fill" style="color: #a855f7;"></i> روبیکا
-                    </a>
-                </div>
-            </div>
-        </div>
+    // Theme
+    themeToggle.addEventListener("click", () => {
+      body.classList.toggle("light");
 
-        <!-- بخش نمایش مدل سه‌بعدی (بدون چرخش خودکار، بدون زوم، زوم نزدیک‌تر و دستی) -->
-        <div class="section-header" id="3d-model">
-            <i class="ri-3d-cube-sphere-line section-header-icon"></i>
-            <div class="section-title">پیش‌نمایش سه‌بعدی اسلحه اسنایپر</div>
-        </div>
+      const isLight = body.classList.contains("light");
 
-        <div class="model-viewer-card">
-            <model-viewer 
-                src="images/gun.glb" 
-                alt="3D Dragon Sniper Model" 
-                camera-controls 
-                disable-zoom
-                shadow-intensity="1.2" 
-                environment-image="neutral" 
-                exposure="1"
-                camera-orbit="0deg 75deg 85%"
-                min-camera-orbit="auto auto auto"
-                max-camera-orbit="auto auto auto"
-                interpolation-decay="200"
-                loading="eager">
-            </model-viewer>
-            <div class="model-hint">
-                <i class="ri-drag-move-fill"></i> برای چرخش دستی ۳۶۰ درجه اسنایپر، روی مدل بکشید
-            </div>
-        </div>
+      themeToggle.innerHTML = isLight
+        ? '<i class="fa-solid fa-sun"></i>'
+        : '<i class="fa-solid fa-moon"></i>';
 
-        <!-- گالری اختصاصی -->
-        <div class="section-header" id="gallery">
-            <i class="ri-image-line section-header-icon"></i>
-            <div class="section-title">گالری و آرت‌ورک‌ها</div>
-        </div>
+      localStorage.setItem("apex-theme", isLight ? "light" : "dark");
+    });
 
-        <!-- شبکه گالری -->
-        <div class="gallery-grid" id="galleryGrid"></div>
+    const savedTheme = localStorage.getItem("apex-theme");
 
-    </div>
+    if (savedTheme === "light") {
+      body.classList.add("light");
+      themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+    }
 
-    <footer>
-        <p>IR APEX STUDIO © 2026 | تمامی حقوق محفوظ است</p>
-    </footer>
+    // Music
+    let musicPlaying = false;
 
-    <!-- موزیک پس‌زمینه -->
-    <audio id="bgMusic" loop src="images/music.mp3"></audio>
-
-    <script>
-        const galleryImages = [
-            { file: 'img1.png', title: 'پیش‌نمایش‌ پروژه‌ما‌ در‌ آینده' },
-            { file: 'img-2.png', title: 'پیش‌نمایش‌ پروژه‌ما‌ در‌ آینده' },
-            { file: 'img3.png', title: 'پیش‌نمایش‌ پروژه‌ما‌ در‌ آینده' }
-        ];
-
-        const galleryGrid = document.getElementById('galleryGrid');
-
-        galleryImages.forEach(img => {
-            const card = document.createElement('div');
-            card.className = 'gallery-card';
-            card.innerHTML = `
-                <img src="images/${img.file}" alt="${img.title}" onerror="this.onerror=null; this.parentElement.style.display='none';">
-                <div class="gallery-info">
-                    <span class="gallery-title">${img.title}</span>
-                </div>
-            `;
-            galleryGrid.appendChild(card);
-        });
-
-        // تم دارک و لایت (پیش‌فرض لایت)
-        const themeToggleBtn = document.getElementById('themeToggleBtn');
-        const themeIcon = document.getElementById('themeIcon');
-        const bodyEl = document.body;
-
-        themeToggleBtn.addEventListener('click', () => {
-            if (bodyEl.getAttribute('data-theme') === 'light') {
-                bodyEl.setAttribute('data-theme', 'dark');
-                themeIcon.className = 'ri-sun-line';
-            } else {
-                bodyEl.setAttribute('data-theme', 'light');
-                themeIcon.className = 'ri-moon-line';
-            }
-        });
-
-        // منوی کشویی
-        const hamburgerBtn = document.getElementById('hamburgerBtn');
-        const closeDrawerBtn = document.getElementById('closeDrawerBtn');
-        const mobileDrawer = document.getElementById('mobileDrawer');
-        const menuOverlay = document.getElementById('menuOverlay');
-
-        function openMenu() {
-            mobileDrawer.classList.add('active');
-            menuOverlay.classList.add('active');
+    musicToggle.addEventListener("click", async () => {
+      if (!musicPlaying) {
+        try {
+          await backgroundMusic.play();
+          musicPlaying = true;
+          musicToggle.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+        } catch (error) {
+          musicToggle.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
         }
+      } else {
+        backgroundMusic.pause();
+        musicPlaying = false;
+        musicToggle.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+      }
+    });
 
-        function closeMenu() {
-            mobileDrawer.classList.remove('active');
-            menuOverlay.classList.remove('active');
+    // Mobile menu
+    menuToggle.addEventListener("click", () => {
+      navLinks.classList.toggle("open");
+
+      menuToggle.innerHTML = navLinks.classList.contains("open")
+        ? '<i class="fa-solid fa-xmark"></i>'
+        : '<i class="fa-solid fa-bars"></i>';
+    });
+
+    document.querySelectorAll(".nav-links a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+      });
+    });
+
+    // Scroll top
+    window.addEventListener("scroll", () => {
+      scrollTop.classList.toggle("show", window.scrollY > 450);
+    });
+
+    scrollTop.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+
+    // Current year
+    document.getElementById("currentYear").textContent =
+      new Date().getFullYear();
+
+    // FAQ
+    document.querySelectorAll(".faq-question").forEach(question => {
+      question.addEventListener("click", () => {
+        const currentItem = question.parentElement;
+
+        document.querySelectorAll(".faq-item").forEach(item => {
+          if (item !== currentItem) {
+            item.classList.remove("open");
+          }
+        });
+
+        currentItem.classList.toggle("open");
+      });
+    });
+
+    // Gallery filters
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const galleryItems = document.querySelectorAll(".gallery-item");
+
+    filterButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        filterButtons.forEach(item => item.classList.remove("active"));
+        button.classList.add("active");
+
+        const filter = button.dataset.filter;
+
+        galleryItems.forEach(item => {
+          const category = item.dataset.category;
+
+          if (filter === "all" || category === filter) {
+            item.classList.remove("hide");
+          } else {
+            item.classList.add("hide");
+          }
+        });
+      });
+    });
+
+    // Lightbox
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImage = document.getElementById("lightboxImage");
+    const lightboxClose = document.getElementById("lightboxClose");
+
+    document.querySelectorAll(".gallery-item img").forEach(image => {
+      image.addEventListener("click", () => {
+        lightboxImage.src = image.src;
+        lightbox.classList.add("show");
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove("show");
+      lightboxImage.src = "";
+    }
+
+    lightboxClose.addEventListener("click", closeLightbox);
+
+    lightbox.addEventListener("click", event => {
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeLightbox();
+      }
+    });
+
+    // 3D model controls
+    const modelViewer = document.getElementById("modelViewer");
+    const rotateModel = document.getElementById("rotateModel");
+    const resetModel = document.getElementById("resetModel");
+    const fullscreenModel = document.getElementById("fullscreenModel");
+
+    rotateModel.addEventListener("click", () => {
+      modelViewer.autoRotate = !modelViewer.autoRotate;
+
+      rotateModel.innerHTML = modelViewer.autoRotate
+        ? '<i class="fa-solid fa-pause"></i> توقف چرخش'
+        : '<i class="fa-solid fa-rotate"></i> چرخش خودکار';
+    });
+
+    resetModel.addEventListener("click", () => {
+      modelViewer.cameraOrbit = "auto auto auto";
+      modelViewer.fieldOfView = "auto";
+      modelViewer.autoRotate = true;
+
+      rotateModel.innerHTML =
+        '<i class="fa-solid fa-pause"></i> توقف چرخش';
+    });
+
+    fullscreenModel.addEventListener("click", async () => {
+      try {
+        if (modelViewer.requestFullscreen) {
+          await modelViewer.requestFullscreen();
+        } else if (modelViewer.parentElement.requestFullscreen) {
+          await modelViewer.parentElement.requestFullscreen();
         }
+      } catch (error) {
+        console.log("Fullscreen is not available.");
+      }
+    });
 
-        hamburgerBtn.addEventListener('click', openMenu);
-        closeDrawerBtn.addEventListener('click', closeMenu);
-        menuOverlay.addEventListener('click', closeMenu);
+    // Reveal animations
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12
+    });
 
-        document.querySelectorAll('.drawer-link').forEach(link => {
-            link.addEventListener('click', closeMenu);
-        });
+    document.querySelectorAll(".reveal").forEach(element => {
+      revealObserver.observe(element);
+    });
 
-        // موزیک پس‌زمینه
-        const musicBtn = document.getElementById('musicBtn');
-        const bgMusic = document.getElementById('bgMusic');
-        let isPlaying = false;
+    // Active navigation
+    const sections = document.querySelectorAll("main section[id]");
+    const navigationItems = document.querySelectorAll(".nav-links a");
 
-        musicBtn.addEventListener('click', () => {
-            if(!isPlaying) {
-                bgMusic.play().then(() => {
-                    musicBtn.style.borderColor = 'var(--accent-cyan)';
-                    musicBtn.style.color = 'var(--accent-cyan)';
-                    isPlaying = true;
-                }).catch(e => {
-                    console.log("پخش موزیک نیازمند فایل معتبر در مسیر images/music.mp3 است");
-                });
-            } else {
-                bgMusic.pause();
-                musicBtn.style.borderColor = 'var(--card-border)';
-                musicBtn.style.color = 'var(--text-main)';
-                isPlaying = false;
-            }
-        });
-    </script>
+    const sectionObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navigationItems.forEach(link => {
+            link.classList.toggle(
+              "active",
+              link.getAttribute("href") === "#" + entry.target.id
+            );
+          });
+        }
+      });
+    }, {
+      rootMargin: "-35% 0px -55% 0px"
+    });
+
+    sections.forEach(section => {
+      sectionObserver.observe(section);
+    });
+  </script>
 </body>
 </html>
