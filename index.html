@@ -10,14 +10,48 @@
 
   <title>IR Apex Studio | دنیای فراتر از تصور</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <!-- اسکریپت لوکال نمایشگر سه‌بعدی (فایل را طبق راهنما در پوشه js بگذار) -->
+  <script type="module" src="js/model-viewer.min.js"></script>
 
   <style>
+    /* =========================================
+       00. LOCAL FONTS (پوشه fonts کنار index.html)
+    ========================================= */
+    @font-face {
+      font-family: "Vazirmatn";
+      src: url("fonts/Vazirmatn-Regular.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Vazirmatn";
+      src: url("fonts/Vazirmatn-Bold.woff2") format("woff2");
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Vazirmatn";
+      src: url("fonts/Vazirmatn-ExtraBold.woff2") format("woff2");
+      font-weight: 800;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Lalezar";
+      src: url("fonts/Lalezar-Regular.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* =========================================
+       01. DESIGN SYSTEM
+    ========================================= */
     :root {
       color-scheme: light;
       --bg: #f4f6ff;
@@ -34,7 +68,7 @@
       --border-strong: rgba(78, 110, 190, .27);
       --shadow: 0 15px 50px rgba(56, 77, 140, .09);
       --shadow-hover: 0 25px 70px rgba(56, 77, 140, .16);
-      --header-bg: rgba(244, 246, 255, .86);
+      --header-bg: rgba(244, 246, 255, .88);
       --radius-sm: 14px;
       --radius-md: 22px;
       --radius-lg: 30px;
@@ -64,7 +98,7 @@
       --border-strong: rgba(125, 151, 255, .29);
       --shadow: 0 18px 65px rgba(0, 0, 0, .25);
       --shadow-hover: 0 25px 75px rgba(0, 0, 0, .38);
-      --header-bg: rgba(8, 11, 23, .86);
+      --header-bg: rgba(8, 11, 23, .88);
       --gradient-soft: linear-gradient(
         135deg,
         rgba(57, 123, 255, .14),
@@ -87,14 +121,14 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: "Vazirmatn", sans-serif;
+      font-family: "Vazirmatn", Tahoma, sans-serif;
       line-height: 1.9;
       overflow-x: hidden;
       transition: background .35s ease, color .35s ease;
     }
 
     body, button, input {
-      font-family: "Vazirmatn", sans-serif;
+      font-family: "Vazirmatn", Tahoma, sans-serif;
     }
 
     button, a {
@@ -116,6 +150,17 @@
       max-width: 100%;
     }
 
+    svg.ico {
+      width: 1em;
+      height: 1em;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
     ::selection {
       background: var(--purple);
       color: #fff;
@@ -127,7 +172,7 @@
     }
 
     .heading-font, h1, h2, h3, .brand-title {
-      font-family: "Lalezar", cursive;
+      font-family: "Lalezar", "Vazirmatn", Tahoma, sans-serif;
       font-weight: 400;
     }
 
@@ -323,6 +368,7 @@
       border: 1px solid var(--border);
       border-radius: 13px;
       cursor: pointer;
+      font-size: 17px;
       transition: .25s;
     }
 
@@ -432,7 +478,7 @@
 
     .hero-meta-item strong {
       display: block;
-      font-family: "Lalezar";
+      font-family: "Lalezar", "Vazirmatn", sans-serif;
       font-size: 27px;
       line-height: 1.3;
     }
@@ -500,9 +546,12 @@
       z-index: 3;
       font-size: 10px;
       font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
     }
 
-    .floating-card i { color: var(--blue); margin-left: 7px; }
+    .floating-card svg { color: var(--blue); font-size: 14px; }
     .floating-card.top { top: 12%; right: -1%; }
     .floating-card.bottom { bottom: 12%; left: -1%; }
 
@@ -553,7 +602,7 @@
       font-weight: 800;
     }
 
-    .intro-feature i { color: var(--blue); font-size: 14px; }
+    .intro-feature svg { color: var(--blue); font-size: 16px; }
 
     .areas-grid {
       display: grid;
@@ -598,7 +647,7 @@
       place-items: center;
       background: var(--gradient-soft);
       color: var(--blue);
-      font-size: 22px;
+      font-size: 23px;
       margin-bottom: 20px;
     }
 
@@ -609,7 +658,7 @@
       position: absolute;
       top: 10px;
       left: 18px;
-      font-family: "Lalezar";
+      font-family: "Lalezar", "Vazirmatn", sans-serif;
       font-size: 36px;
       color: var(--border-strong);
     }
@@ -625,7 +674,7 @@
 
     .feature-item { display: flex; align-items: center; gap: 15px; }
 
-    .feature-item i {
+    .feature-icon-box {
       width: 47px;
       height: 47px;
       display: grid;
@@ -635,7 +684,7 @@
       background: var(--surface);
       color: var(--blue);
       box-shadow: var(--shadow);
-      font-size: 18px;
+      font-size: 19px;
     }
 
     .feature-item strong { display: block; font-size: 12px; }
@@ -734,12 +783,19 @@
 
     .model-loading.hidden { opacity: 0; visibility: hidden; }
 
-    .model-loading i {
+    .model-loading svg {
       color: var(--blue);
-      font-size: 23px;
-      margin-bottom: 12px;
+      font-size: 24px;
+      margin: 0 auto 12px;
       display: block;
-      text-align: center;
+    }
+
+    .spin {
+      animation: spin360 1.4s linear infinite;
+    }
+
+    @keyframes spin360 {
+      to { transform: rotate(360deg); }
     }
 
     .model-information { padding: 15px; }
@@ -747,8 +803,15 @@
     .model-information h2 { font-size: 36px; line-height: 1.5; margin-bottom: 15px; }
     .model-information p { color: var(--muted); font-size: 12px; line-height: 2.4; margin-bottom: 20px; }
     .model-controls { display: flex; flex-wrap: wrap; gap: 10px; }
-    .model-hint { color: var(--muted); font-size: 10px; margin-top: 18px; }
-    .model-hint i { color: var(--blue); margin-left: 5px; }
+    .model-hint {
+      color: var(--muted);
+      font-size: 10px;
+      margin-top: 18px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .model-hint svg { color: var(--blue); font-size: 13px; }
 
     .gallery-filters {
       display: flex;
@@ -799,22 +862,20 @@
 
     .gallery-item:hover img { transform: scale(1.08); }
 
-    .gallery-item::after {
-      content: "\f00e";
-      font-family: "Font Awesome 6 Free";
-      font-weight: 900;
+    .gallery-zoom {
       position: absolute;
       inset: 0;
       display: grid;
       place-items: center;
       color: #fff;
-      font-size: 25px;
+      font-size: 24px;
       background: rgba(5, 10, 30, .4);
       opacity: 0;
       transition: .3s;
+      pointer-events: none;
     }
 
-    .gallery-item:hover::after { opacity: 1; }
+    .gallery-item:hover .gallery-zoom { opacity: 1; }
     .gallery-item.hidden { display: none; }
 
     .philosophy, .follow-box {
@@ -837,7 +898,7 @@
       border-radius: 20px;
       background: var(--gradient);
       color: #fff;
-      font-size: 25px;
+      font-size: 27px;
       margin: 0 auto 20px;
       box-shadow: 0 12px 35px rgba(92, 104, 255, .25);
     }
@@ -863,11 +924,11 @@
       font-weight: 800;
     }
 
-    .faq-question i { color: var(--blue); transition: transform .3s; }
+    .faq-question svg { color: var(--blue); transition: transform .3s; font-size: 15px; }
     .faq-answer { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
     .faq-answer p { padding: 0 21px 20px; color: var(--muted); font-size: 11px; line-height: 2.4; }
     .faq-item.open .faq-answer { max-height: 220px; }
-    .faq-item.open .faq-question i { transform: rotate(180deg); }
+    .faq-item.open .faq-question svg { transform: rotate(180deg); }
 
     .social-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
 
@@ -903,8 +964,8 @@
     }
 
     .footer-copy { color: var(--muted); font-size: 10px; }
-    .footer-links { display: flex; gap: 16px; color: var(--muted); }
-    .footer-links a { transition: .2s; }
+    .footer-links { display: flex; gap: 16px; color: var(--muted); font-size: 16px; }
+    .footer-links a { transition: .2s; display: inline-flex; }
     .footer-links a:hover { color: var(--blue); }
 
     .lightbox {
@@ -938,6 +999,8 @@
       color: #fff;
       background: rgba(255, 255, 255, .13);
       cursor: pointer;
+      display: grid;
+      place-items: center;
       font-size: 20px;
     }
 
@@ -955,6 +1018,7 @@
       background: var(--gradient);
       box-shadow: var(--shadow);
       cursor: pointer;
+      font-size: 18px;
       opacity: 0;
       visibility: hidden;
       transform: translateY(15px);
@@ -1051,6 +1115,41 @@
 </head>
 
 <body>
+  <!-- SVG ICON SPRITE (کاملاً داخلی و بدون اینترنت) -->
+  <svg style="display:none" aria-hidden="true">
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+    <symbol id="i-vol-off" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></symbol>
+    <symbol id="i-vol-on" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></symbol>
+    <symbol id="i-cube" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></symbol>
+    <symbol id="i-wand" viewBox="0 0 24 24"><path d="m15 4-1 1 5 5 1-1a2.83 2.83 0 1 0-4-4Z"/><path d="m13 6-9 9a2.12 2.12 0 1 0 3 3l9-9"/><path d="M5 3v4M3 5h4M19 14v4M17 16h4"/></symbol>
+    <symbol id="i-gem" viewBox="0 0 24 24"><polygon points="6 3 18 3 22 9 12 22 2 9 6 3"/><polyline points="2 9 22 9"/><polyline points="12 22 8 9 12 3 16 9 12 22"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></symbol>
+    <symbol id="i-gamepad" viewBox="0 0 24 24"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="15" y1="13" x2="15.01" y2="13"/><line x1="18" y1="11" x2="18.01" y2="11"/><rect x="2" y="6" width="20" height="12" rx="4"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></symbol>
+    <symbol id="i-media" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="m21 16-5-5L5 20"/></symbol>
+    <symbol id="i-vr" viewBox="0 0 24 24"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-4.5l-1.6-2.4a1.1 1.1 0 0 0-1.8 0L9.5 17H5a2 2 0 0 1-2-2V8Z"/><circle cx="8" cy="11.5" r="1.5"/><circle cx="16" cy="11.5" r="1.5"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-shapes" viewBox="0 0 24 24"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"/><rect x="3" y="14" width="7" height="7" rx="1"/><circle cx="17.5" cy="17.5" r="3.5"/></symbol>
+    <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></symbol>
+    <symbol id="i-rotate" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><polyline points="21 3 21 8 16 8"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></symbol>
+    <symbol id="i-zoom" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></symbol>
+    <symbol id="i-infinity" viewBox="0 0 24 24"><path d="M18.178 8c5.096 0 5.096 8 0 8-5.095 0-7.133-8-12.739-8-4.585 0-4.585 8 0 8 5.606 0 7.644-8 12.74-8z"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+  </svg>
+
   <div class="background-grid"></div>
   <div class="ambient ambient-a"></div>
   <div class="ambient ambient-b"></div>
@@ -1077,13 +1176,13 @@
 
       <div class="header-actions">
         <button class="icon-button" id="themeToggle" aria-label="تغییر پوسته">
-          <i class="fa-solid fa-moon"></i>
+          <svg class="ico"><use href="#i-moon"/></svg>
         </button>
         <button class="icon-button" id="musicToggle" aria-label="موسیقی">
-          <i class="fa-solid fa-volume-xmark"></i>
+          <svg class="ico"><use href="#i-vol-off"/></svg>
         </button>
         <button class="icon-button menu-button" id="menuToggle" aria-label="منو">
-          <i class="fa-solid fa-bars"></i>
+          <svg class="ico"><use href="#i-menu"/></svg>
         </button>
       </div>
     </div>
@@ -1118,11 +1217,11 @@
           <div class="hero-buttons">
             <a href="#projects" class="button button-primary">
               دیدن پروژه‌ها
-              <i class="fa-solid fa-arrow-left"></i>
+              <svg class="ico"><use href="#i-arrow-left"/></svg>
             </a>
             <a href="#about" class="button button-secondary">
               آشنایی با استودیو
-              <i class="fa-solid fa-compass"></i>
+              <svg class="ico"><use href="#i-compass"/></svg>
             </a>
           </div>
 
@@ -1151,11 +1250,11 @@
           </div>
 
           <div class="floating-card top">
-            <i class="fa-solid fa-cube"></i>
+            <svg class="ico"><use href="#i-cube"/></svg>
             3D DESIGN
           </div>
           <div class="floating-card bottom">
-            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <svg class="ico"><use href="#i-wand"/></svg>
             CREATIVE WORLD
           </div>
         </div>
@@ -1190,10 +1289,10 @@
           </p>
 
           <div class="intro-features">
-            <div class="intro-feature"><i class="fa-solid fa-gem"></i>هویت بصری مستقل</div>
-            <div class="intro-feature"><i class="fa-solid fa-layer-group"></i>توجه به جزئیات</div>
-            <div class="intro-feature"><i class="fa-solid fa-lightbulb"></i>نگاه خلاقانه</div>
-            <div class="intro-feature"><i class="fa-solid fa-cubes"></i>تجربه دنیای دیجیتال</div>
+            <div class="intro-feature"><svg class="ico"><use href="#i-gem"/></svg>هویت بصری مستقل</div>
+            <div class="intro-feature"><svg class="ico"><use href="#i-layers"/></svg>توجه به جزئیات</div>
+            <div class="intro-feature"><svg class="ico"><use href="#i-bulb"/></svg>نگاه خلاقانه</div>
+            <div class="intro-feature"><svg class="ico"><use href="#i-cube"/></svg>تجربه دنیای دیجیتال</div>
           </div>
         </div>
       </div>
@@ -1216,42 +1315,42 @@
         <div class="areas-grid">
           <article class="area-card surface crystal-border reveal">
             <span class="area-index">01</span>
-            <div class="area-icon"><i class="fa-solid fa-cube"></i></div>
+            <div class="area-icon"><svg class="ico"><use href="#i-cube"/></svg></div>
             <h3>مدل‌سازی سه‌بعدی</h3>
             <p>خلق اشیاء، تجهیزات، محیط‌ها و عناصر دیجیتال با توجه به فرم، حجم، متریال و جزئیات بصری.</p>
           </article>
 
           <article class="area-card surface crystal-border reveal">
             <span class="area-index">02</span>
-            <div class="area-icon"><i class="fa-solid fa-gamepad"></i></div>
+            <div class="area-icon"><svg class="ico"><use href="#i-gamepad"/></svg></div>
             <h3>دنیای بازی</h3>
             <p>علاقه به جهان بازی‌ها، طراحی عناصر بازی، ایده‌های تعاملی و ساخت فضاهای مجازی.</p>
           </article>
 
           <article class="area-card surface crystal-border reveal">
             <span class="area-index">03</span>
-            <div class="area-icon"><i class="fa-solid fa-palette"></i></div>
+            <div class="area-icon"><svg class="ico"><use href="#i-palette"/></svg></div>
             <h3>هنر دیجیتال</h3>
             <p>ترکیب رنگ، نور، فرم و ایده برای خلق آثار بصری با شخصیت و سبک مخصوص خودشان.</p>
           </article>
 
           <article class="area-card surface crystal-border reveal">
             <span class="area-index">04</span>
-            <div class="area-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+            <div class="area-icon"><svg class="ico"><use href="#i-wand"/></svg></div>
             <h3>طراحی مفهومی</h3>
             <p>تبدیل ایده‌های ذهنی به طرح‌های اولیه و شکل‌دادن به فضای بصری یک اثر.</p>
           </article>
 
           <article class="area-card surface crystal-border reveal">
             <span class="area-index">05</span>
-            <div class="area-icon"><i class="fa-solid fa-photo-film"></i></div>
+            <div class="area-icon"><svg class="ico"><use href="#i-media"/></svg></div>
             <h3>محتوای بصری</h3>
             <p>طراحی تصاویر، گرافیک‌ها و محتوای دیجیتال هماهنگ با هویت بصری استودیو.</p>
           </article>
 
           <article class="area-card surface crystal-border reveal">
             <span class="area-index">06</span>
-            <div class="area-icon"><i class="fa-solid fa-vr-cardboard"></i></div>
+            <div class="area-icon"><svg class="ico"><use href="#i-vr"/></svg></div>
             <h3>تجربه‌های تعاملی</h3>
             <p>علاقه به فضاهای دیجیتال که مخاطب بتواند آن‌ها را کشف و از زوایای مختلف تجربه کند.</p>
           </article>
@@ -1262,21 +1361,21 @@
     <section class="container reveal">
       <div class="feature-strip surface crystal-border">
         <div class="feature-item">
-          <i class="fa-solid fa-eye"></i>
+          <div class="feature-icon-box"><svg class="ico"><use href="#i-eye"/></svg></div>
           <div>
             <strong>نگاه متفاوت</strong>
             <span>توجه به هویت و جزئیات</span>
           </div>
         </div>
         <div class="feature-item">
-          <i class="fa-solid fa-shapes"></i>
+          <div class="feature-icon-box"><svg class="ico"><use href="#i-shapes"/></svg></div>
           <div>
             <strong>جهان بصری</strong>
             <span>ترکیب فرم، رنگ و ایده</span>
           </div>
         </div>
         <div class="feature-item">
-          <i class="fa-solid fa-rocket"></i>
+          <div class="feature-icon-box"><svg class="ico"><use href="#i-rocket"/></svg></div>
           <div>
             <strong>نگاه رو به آینده</strong>
             <span>علاقه به فناوری و خلاقیت</span>
@@ -1359,7 +1458,7 @@
           <div class="model-stage">
             <div class="model-loading" id="modelLoading">
               <div>
-                <i class="fa-solid fa-cube fa-spin"></i>
+                <svg class="ico spin"><use href="#i-cube"/></svg>
                 در حال آماده‌سازی مدل سه‌بعدی...
               </div>
             </div>
@@ -1398,21 +1497,21 @@
 
             <div class="model-controls">
               <button class="button button-primary" id="rotationToggle">
-                <i class="fa-solid fa-rotate"></i>
+                <svg class="ico"><use href="#i-rotate"/></svg>
                 شروع چرخش خودکار
               </button>
               <button class="button button-secondary" id="modelReset">
-                <i class="fa-solid fa-arrows-rotate"></i>
+                <svg class="ico"><use href="#i-rotate"/></svg>
                 بازنشانی دوربین
               </button>
               <button class="button button-secondary" id="modelFullscreen">
-                <i class="fa-solid fa-expand"></i>
+                <svg class="ico"><use href="#i-expand"/></svg>
                 تمام‌صفحه
               </button>
             </div>
 
             <div class="model-hint">
-              <i class="fa-solid fa-circle-info"></i>
+              <svg class="ico"><use href="#i-info"/></svg>
               برای چرخاندن مدل، کلیک کن و بکش؛ برای بزرگ‌نمایی از اسکرول استفاده کن.
             </div>
           </div>
@@ -1441,15 +1540,19 @@
         <div class="gallery-grid">
           <div class="gallery-item reveal" data-category="design">
             <img src="images/img1.png" alt="تصویر اول گالری" loading="lazy">
+            <span class="gallery-zoom"><svg class="ico"><use href="#i-zoom"/></svg></span>
           </div>
           <div class="gallery-item reveal" data-category="art">
             <img src="images/img-2.png" alt="تصویر دوم گالری" loading="lazy">
+            <span class="gallery-zoom"><svg class="ico"><use href="#i-zoom"/></svg></span>
           </div>
           <div class="gallery-item reveal" data-category="project">
             <img src="images/img3.png" alt="تصویر سوم گالری" loading="lazy">
+            <span class="gallery-zoom"><svg class="ico"><use href="#i-zoom"/></svg></span>
           </div>
           <div class="gallery-item reveal" data-category="project">
             <img src="images/img4.png" alt="تصویر چهارم گالری" loading="lazy">
+            <span class="gallery-zoom"><svg class="ico"><use href="#i-zoom"/></svg></span>
           </div>
         </div>
       </div>
@@ -1457,7 +1560,7 @@
 
     <section class="container reveal">
       <div class="philosophy surface crystal-border">
-        <div class="philosophy-icon"><i class="fa-solid fa-infinity"></i></div>
+        <div class="philosophy-icon"><svg class="ico"><use href="#i-infinity"/></svg></div>
         <span class="section-kicker">OUR PHILOSOPHY</span>
         <h2>
           خلاقیت، پایانی
@@ -1488,7 +1591,7 @@
           <div class="faq-item surface reveal">
             <button class="faq-question">
               IR Apex Studio چیست؟
-              <i class="fa-solid fa-chevron-down"></i>
+              <svg class="ico"><use href="#i-chevron"/></svg>
             </button>
             <div class="faq-answer">
               <p>
@@ -1502,7 +1605,7 @@
           <div class="faq-item surface reveal">
             <button class="faq-question">
               آیا مدل سه‌بعدی قابل چرخاندن است؟
-              <i class="fa-solid fa-chevron-down"></i>
+              <svg class="ico"><use href="#i-chevron"/></svg>
             </button>
             <div class="faq-answer">
               <p>
@@ -1515,7 +1618,7 @@
           <div class="faq-item surface reveal">
             <button class="faq-question">
               چگونه می‌توان تصاویر بزرگ‌تر را دید؟
-              <i class="fa-solid fa-chevron-down"></i>
+              <svg class="ico"><use href="#i-chevron"/></svg>
             </button>
             <div class="faq-answer">
               <p>روی هر تصویر در گالری کلیک کن تا نسخه بزرگ آن در پنجره نمایش تصویر باز شود.</p>
@@ -1525,7 +1628,7 @@
           <div class="faq-item surface reveal">
             <button class="faq-question">
               آیا سایت حالت تاریک هم دارد؟
-              <i class="fa-solid fa-chevron-down"></i>
+              <svg class="ico"><use href="#i-chevron"/></svg>
             </button>
             <div class="faq-answer">
               <p>
@@ -1554,11 +1657,11 @@
 
           <div class="social-buttons">
             <a class="social-button" href="https://eitaa.com/irApexStudio_Admin" target="_blank" rel="noopener noreferrer">
-              <i class="fa-solid fa-paper-plane"></i>
+              <svg class="ico"><use href="#i-send"/></svg>
               صفحه رسمی ایتا
             </a>
             <a class="social-button" href="https://rubika.ir/irApexStudio_Admin" target="_blank" rel="noopener noreferrer">
-              <i class="fa-solid fa-comments"></i>
+              <svg class="ico"><use href="#i-chat"/></svg>
               صفحه رسمی روبیکا
             </a>
           </div>
@@ -1583,13 +1686,13 @@
 
       <div class="footer-links">
         <a href="https://eitaa.com/irApexStudio_Admin" target="_blank" rel="noopener noreferrer" aria-label="ایتا">
-          <i class="fa-solid fa-paper-plane"></i>
+          <svg class="ico"><use href="#i-send"/></svg>
         </a>
         <a href="https://rubika.ir/irApexStudio_Admin" target="_blank" rel="noopener noreferrer" aria-label="روبیکا">
-          <i class="fa-solid fa-comments"></i>
+          <svg class="ico"><use href="#i-chat"/></svg>
         </a>
         <a href="#home" aria-label="بازگشت به بالا">
-          <i class="fa-solid fa-arrow-up"></i>
+          <svg class="ico"><use href="#i-arrow-up"/></svg>
         </a>
       </div>
     </div>
@@ -1597,13 +1700,13 @@
 
   <div class="lightbox" id="lightbox">
     <button class="lightbox-close" id="lightboxClose" aria-label="بستن">
-      <i class="fa-solid fa-xmark"></i>
+      <svg class="ico"><use href="#i-close"/></svg>
     </button>
     <img src="" alt="نمایش تصویر بزرگ" id="lightboxImage">
   </div>
 
   <button class="scroll-top" id="scrollTop" aria-label="بازگشت به بالا">
-    <i class="fa-solid fa-arrow-up"></i>
+    <svg class="ico"><use href="#i-arrow-up"/></svg>
   </button>
 
   <script>
@@ -1615,16 +1718,14 @@
       const dark = theme === "dark";
       document.body.classList.toggle("dark", dark);
       themeToggle.innerHTML = dark
-        ? '<i class="fa-solid fa-sun"></i>'
-        : '<i class="fa-solid fa-moon"></i>';
+        ? '<svg class="ico"><use href="#i-sun"/></svg>'
+        : '<svg class="ico"><use href="#i-moon"/></svg>';
       themeToggle.setAttribute("aria-label", dark ? "تغییر به حالت روشن" : "تغییر به حالت تاریک");
       document.querySelector('meta[name="theme-color"]').setAttribute("content", dark ? "#080b17" : "#f4f6ff");
     }
 
     let currentTheme = "light";
-    try {
-      currentTheme = localStorage.getItem("apex-theme") || "light";
-    } catch (_) {}
+    try { currentTheme = localStorage.getItem("apex-theme") || "light"; } catch (_) {}
     applyTheme(currentTheme);
 
     themeToggle.addEventListener("click", () => {
@@ -1638,12 +1739,14 @@
 
     function closeMenu() {
       navLinks.classList.remove("open");
-      menuToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+      menuToggle.innerHTML = '<svg class="ico"><use href="#i-menu"/></svg>';
     }
 
     menuToggle.addEventListener("click", () => {
       const opened = navLinks.classList.toggle("open");
-      menuToggle.innerHTML = opened ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+      menuToggle.innerHTML = opened
+        ? '<svg class="ico"><use href="#i-close"/></svg>'
+        : '<svg class="ico"><use href="#i-menu"/></svg>';
     });
 
     document.querySelectorAll(".nav-links a").forEach(link => link.addEventListener("click", closeMenu));
@@ -1663,20 +1766,20 @@
         try {
           await music.play();
           musicPlaying = true;
-          musicToggle.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+          musicToggle.innerHTML = '<svg class="ico"><use href="#i-vol-on"/></svg>';
         } catch (error) {
           console.warn("Music could not be played:", error);
         }
       } else {
         music.pause();
         musicPlaying = false;
-        musicToggle.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+        musicToggle.innerHTML = '<svg class="ico"><use href="#i-vol-off"/></svg>';
       }
     });
 
     music.addEventListener("ended", () => {
       musicPlaying = false;
-      musicToggle.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+      musicToggle.innerHTML = '<svg class="ico"><use href="#i-vol-off"/></svg>';
     });
 
     const header = document.getElementById("siteHeader");
@@ -1754,8 +1857,8 @@
 
     function updateRotationButton() {
       rotationToggle.innerHTML = automaticRotation
-        ? '<i class="fa-solid fa-pause"></i> توقف چرخش خودکار'
-        : '<i class="fa-solid fa-rotate"></i> شروع چرخش خودکار';
+        ? '<svg class="ico"><use href="#i-pause"/></svg> توقف چرخش خودکار'
+        : '<svg class="ico"><use href="#i-rotate"/></svg> شروع چرخش خودکار';
     }
 
     function syncAutomaticRotation() {
@@ -1816,15 +1919,14 @@
     });
 
     modelViewer.addEventListener("error", () => {
-      modelLoading.innerHTML = '<div><i class="fa-solid fa-triangle-exclamation"></i>بارگذاری مدل سه‌بعدی در دسترس نیست.</div>';
+      modelLoading.innerHTML = '<div><svg class="ico"><use href="#i-warn"/></svg>فایل مدل سه‌بعدی پیدا نشد یا قابل بارگذاری نیست.</div>';
     });
 
-    // اگر اسکریپت model-viewer بدون VPN لود نشود، لودینگ را مخفی نگه‌دار تا صفحه قفل به نظر نرسد
     setTimeout(() => {
       if (!customElements.get("model-viewer")) {
-        modelLoading.innerHTML = '<div><i class="fa-solid fa-cube"></i>نمایشگر سه‌بعدی نیازمند اتصال به منبع مدل است.</div>';
+        modelLoading.innerHTML = '<div><svg class="ico"><use href="#i-cube"/></svg>فایل js/model-viewer.min.js در پوشه پروژه قرار نگرفته است.</div>';
       }
-    }, 4500);
+    }, 3000);
 
     updateRotationButton();
 
